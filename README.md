@@ -44,8 +44,6 @@ EVVTransportApp streamlines the workflow for transport drivers, allowing them to
 ## 🤝 Contributing
 Pull requests are welcome! For major changes, please open an issue first to discuss what you would like to change.
 
-## 📄 License
-MIT License. See [LICENSE](LICENSE) for details.
 
 ## 👤 Author
 [Souhail Bourhim](https://github.com/SouhailBourhim)
