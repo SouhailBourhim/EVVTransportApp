@@ -10,7 +10,7 @@ This design document outlines the integration of the iOS EVV Transport App with 
 
 ```
 iOS App (SwiftUI) ←→ HTTP/REST ←→ ASP.NET Web API (IIS) ←→ SQL Server Database
-Backend URL: http://advantecis-csmwebservicebus.com/Help
+Backend URL: http://khaybadrrak3arflurl
 ```
 
 ### Component Layers
