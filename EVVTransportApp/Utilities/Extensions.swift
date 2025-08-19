@@ -147,8 +147,8 @@ extension Array where Element == Passenger {
     
     func sortedByScheduledTime() -> [Passenger] {
         return self.sorted { passenger1, passenger2 in
-            // Simple time comparison - in production you'd want proper date parsing
-            return passenger1.scheduledPickup < passenger2.scheduledPickup
+            // Since backend doesn't provide scheduled times, sort by name instead
+            return passenger1.name < passenger2.name
         }
     }
 }

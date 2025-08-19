@@ -87,3 +87,56 @@ project.xcworkspace/xcuserdata/
 
 # Logs
 *.log
+
+# Additional security and build artifacts
+# Certificates and provisioning profiles
+*.cer
+*.p12
+*.pem
+*.mobileprovision
+*.key
+
+# Environment files and secrets
+.env
+.env.local
+.env.production
+.env.staging
+secrets.json
+config.json
+api_keys.json
+
+# Backup files
+*.backup
+*.bak
+*.orig
+
+# Test artifacts
+TestResults/
+coverage/
+*.coverage
+
+# Build artifacts
+build/
+dist/
+
+# Package manager lock files (if using SPM)
+Package.resolved
+
+# Xcode user-specific files
+*.xcuserstate
+*.xcuserdatad
+xcuserdata/
+
+# App Store Connect API keys
+*.p8
+
+# Crash logs
+*.crash
+
+# Performance data
+*.trace
+
+# Backup files created by editors
+*~
+*.swp
+*.swo

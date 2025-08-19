@@ -66,6 +66,8 @@
 				App/ContentView.swift,
 				App/EVVTransportAppApp.swift,
 				"App/Preview Content/Preview Assets.xcassets",
+				Info.plist,
+				Models/APIModels.swift,
 				Models/Passenger.swift,
 				Models/StatusUpdate.swift,
 				Models/User.swift,
@@ -458,6 +460,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"EVVTransportApp/App/Preview Content\"";
 				DEVELOPMENT_TEAM = 7MPV3CPR5S;
 				ENABLE_PREVIEWS = YES;
@@ -487,6 +490,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"/Users/apple/Desktop/EVVTransportApp/EVVTransportApp/App/Preview Content\"";
 				DEVELOPMENT_TEAM = 7MPV3CPR5S;
 				ENABLE_PREVIEWS = YES;

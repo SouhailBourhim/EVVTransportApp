@@ -100,15 +100,7 @@ struct LoginView: View {
                             .focused($focusedField, equals: .password)
                         }
                         
-                        // Forgot Password
-                        HStack {
-                            Spacer()
-                            Button("Forgot Password?") {
-                                // Handle forgot password
-                            }
-                            .font(.footnote)
-                            .foregroundColor(.blue)
-                        }
+
                     }
                     .padding(.horizontal)
                     

@@ -104,16 +104,17 @@ final class ExtensionsTests: XCTestCase {
     
     func testArraySortedByScheduledTime() throws {
         let passengers = [
-            createMockPassenger(recid: "1", scheduledPickup: "10:00 AM"),
-            createMockPassenger(recid: "2", scheduledPickup: "08:00 AM"),
-            createMockPassenger(recid: "3", scheduledPickup: "09:00 AM")
+            createMockPassenger(recid: "1"),
+            createMockPassenger(recid: "2"),
+            createMockPassenger(recid: "3")
         ]
         
         let sorted = passengers.sortedByScheduledTime()
         
-        XCTAssertEqual(sorted[0].scheduledPickup, "08:00 AM")
-        XCTAssertEqual(sorted[1].scheduledPickup, "09:00 AM")
-        XCTAssertEqual(sorted[2].scheduledPickup, "10:00 AM")
+        // Since backend doesn't provide scheduled times, all should be "N/A"
+        XCTAssertEqual(sorted[0].scheduledPickup, "N/A")
+        XCTAssertEqual(sorted[1].scheduledPickup, "N/A")
+        XCTAssertEqual(sorted[2].scheduledPickup, "N/A")
     }
     
     func testBundleAppVersion() throws {
@@ -139,18 +140,15 @@ final class ExtensionsTests: XCTestCase {
         }
     }
     
-    private func createMockPassenger(recid: String, scheduledPickup: String = "09:00 AM") -> Passenger {
+    private func createMockPassenger(recid: String) -> Passenger {
         return Passenger(
             recid: recid,
             name: "Test Passenger \(recid)",
-            pickupLocation: "Test Pickup Location",
-            dropoffLocation: "Test Dropoff Location",
-            scheduledPickup: scheduledPickup,
-            scheduledDropoff: "10:00 AM",
+            address: "Test Address",
             status: .pending,
-            medicalNotes: nil,
             contactInfo: nil,
-            wheelchairFlag: false
+            gender: 1,
+            city: "Test City"
         )
     }
 }

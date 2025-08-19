@@ -25,20 +25,18 @@ final class EVVTransportAppTests: XCTestCase {
         let passenger = Passenger(
             recid: "001",
             name: "Test User",
-            pickupLocation: "123 Test St",
-            dropoffLocation: "456 Test Ave",
-            scheduledPickup: "09:00 AM",
-            scheduledDropoff: "10:00 AM",
+            address: "123 Test St",
             status: .pending,
-            medicalNotes: "Test notes",
             contactInfo: "555-1234",
-            wheelchairFlag: true
+            gender: 1,
+            city: "Test City"
         )
         
         XCTAssertEqual(passenger.recid, "001")
         XCTAssertEqual(passenger.name, "Test User")
         XCTAssertEqual(passenger.status, .pending)
-        XCTAssertTrue(passenger.wheelchairFlag)
+        XCTAssertEqual(passenger.gender, 1)
+        XCTAssertEqual(passenger.city, "Test City")
     }
     
     func testPassengerStatusEnum() throws {
@@ -55,7 +53,6 @@ final class EVVTransportAppTests: XCTestCase {
         let statusUpdate = StatusUpdate(
             recid: "001",
             status: "picked up",
-            datetime: "2025-01-01T10:00:00Z",
             latitude: 40.7128,
             longitude: -74.0060
         )
@@ -67,7 +64,7 @@ final class EVVTransportAppTests: XCTestCase {
     }
     
     func testUserModel() throws {
-        let user = User(username: "testdriver", routeId: "ROUTE_001")
+        let user = User(username: "testdriver", routeId: "ROUTE_001", driverName: "Test Driver", sessionId: "session_test")
         
         XCTAssertEqual(user.username, "testdriver")
         XCTAssertEqual(user.routeId, "ROUTE_001")

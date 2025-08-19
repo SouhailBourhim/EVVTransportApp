@@ -25,10 +25,10 @@ final class DataServiceTests: XCTestCase {
     }
     
     func testSaveAndLoadUserSession() throws {
-        let user = User(username: "testuser", routeId: "ROUTE_001")
+        let user = User(username: "testuser", routeId: "ROUTE_001", driverName: "Test Driver", sessionId: "session_test")
         
         // Save user session
-        dataService.saveUserSession(user)
+        dataService.saveUserSession(user, routeId: user.routeId)
         
         // Load user session
         let loadedUser = dataService.loadUserSession()
@@ -44,10 +44,10 @@ final class DataServiceTests: XCTestCase {
     }
     
     func testClearUserSession() throws {
-        let user = User(username: "testuser", routeId: "ROUTE_001")
+        let user = User(username: "testuser", routeId: "ROUTE_001", driverName: "Test Driver", sessionId: "session_test")
         
         // Save and verify
-        dataService.saveUserSession(user)
+        dataService.saveUserSession(user, routeId: user.routeId)
         XCTAssertNotNil(dataService.loadUserSession())
         
         // Clear and verify
@@ -126,7 +126,7 @@ final class DataServiceTests: XCTestCase {
         let testDate = Date()
         
         // Save all types of data
-        dataService.saveUserSession(user)
+        dataService.saveUserSession(user, routeId: user.routeId)
         dataService.saveAuthToken(testToken)
         dataService.saveLastSyncTime(testDate)
         dataService.saveAppSettings()

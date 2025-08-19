@@ -78,7 +78,10 @@ struct PassengerDetailView: View {
         
         Task {
             await routeViewModel.updatePassengerStatus(passenger, to: newStatus)
-            dismiss()
+            // Only dismiss if the update was successful (no error)
+            if routeViewModel.errorMessage.isEmpty {
+                dismiss()
+            }
         }
     }
     
@@ -124,14 +127,6 @@ struct PassengerDetailView: View {
                                     .padding(.horizontal, 10)
                                     .padding(.vertical, 4)
                                     .background(Capsule().fill(statusColor))
-                                if passenger.wheelchairFlag {
-                                    Image(systemName: "figure.roll")
-                                        .font(.caption)
-                                        .foregroundColor(.purple)
-                                        .padding(6)
-                                        .background(Color.purple.opacity(0.1))
-                                        .clipShape(Circle())
-                                }
                             }
                             .padding(.bottom, 8)
                         }
@@ -192,27 +187,29 @@ struct PassengerDetailView: View {
                         .shadow(color: Color.black.opacity(0.05), radius: 5, x: 0, y: 2)
                     }
                     
-                    // Schedule Card
+                    // Schedule Card - Not available from backend
                     VStack(alignment: .leading, spacing: 16) {
                         SectionHeader(title: "SCHEDULE", icon: "clock")
                         
                         VStack(spacing: 12) {
-                            InfoRow(
-                                icon: "clock.fill",
-                                title: "Scheduled Pickup",
-                                value: passenger.scheduledPickup,
-                                color: .orange
-                            )
-                            
-                            Divider()
-                                .padding(.leading, 32)
-                            
-                            InfoRow(
-                                icon: "clock.fill",
-                                title: "Scheduled Drop-off",
-                                value: passenger.scheduledDropoff,
-                                color: .orange
-                            )
+                            HStack(spacing: 12) {
+                                Image(systemName: "exclamationmark.triangle")
+                                    .foregroundColor(.orange)
+                                    .frame(width: 24, alignment: .center)
+                                
+                                VStack(alignment: .leading, spacing: 2) {
+                                    Text("SCHEDULE NOT AVAILABLE")
+                                        .font(.caption)
+                                        .foregroundColor(.secondary)
+                                    
+                                    Text("Scheduled times are not provided by the backend system")
+                                        .font(.body)
+                                        .foregroundColor(.primary)
+                                        .fixedSize(horizontal: false, vertical: true)
+                                }
+                                
+                                Spacer()
+                            }
                         }
                         .padding()
                         .background(Color(.secondarySystemBackground))
@@ -232,29 +229,23 @@ struct PassengerDetailView: View {
                                 color: .gray
                             )
                             
-                            if let medicalNotes = passenger.medicalNotes, !medicalNotes.isEmpty {
+                            InfoRow(
+                                icon: "building.2",
+                                title: "City",
+                                value: passenger.city,
+                                color: .purple
+                            )
+                            
+                            if let contactInfo = passenger.contactInfo, !contactInfo.isEmpty {
                                 Divider()
                                     .padding(.leading, 32)
                                 
-                                VStack(alignment: .leading, spacing: 4) {
-                                    HStack(spacing: 8) {
-                                        Image(systemName: "note.text")
-                                            .foregroundColor(.gray)
-                                        
-                                        Text("MEDICAL NOTES")
-                                            .font(.caption)
-                                            .fontWeight(.medium)
-                                            .foregroundColor(.secondary)
-                                            .textCase(.uppercase)
-                                        
-                                        Spacer()
-                                    }
-                                    
-                                    Text(medicalNotes)
-                                        .font(.body)
-                                        .foregroundColor(.primary)
-                                        .padding(.leading, 32)
-                                }
+                                InfoRow(
+                                    icon: "phone",
+                                    title: "Contact Info",
+                                    value: contactInfo,
+                                    color: .green
+                                )
                             }
                         }
                         .padding()
@@ -267,16 +258,23 @@ struct PassengerDetailView: View {
                     Button(action: handleStatusUpdate) {
                         HStack {
                             Spacer()
-                            Text(actionButtonTitle)
-                                .font(.headline)
-                                .foregroundColor(.white)
-                                .padding()
+                            if routeViewModel.isLoading {
+                                ProgressView()
+                                    .scaleEffect(0.8)
+                                    .foregroundColor(.white)
+                            } else {
+                                Text(actionButtonTitle)
+                                    .font(.headline)
+                                    .foregroundColor(.white)
+                            }
                             Spacer()
                         }
+                        .padding()
                         .background(actionButtonColor)
                         .cornerRadius(12)
                         .shadow(color: actionButtonColor.opacity(0.3), radius: 5, x: 0, y: 2)
                     }
+                    .disabled(routeViewModel.isLoading)
                     .padding(.vertical, 24)
                     
                     Spacer()
@@ -310,6 +308,20 @@ struct PassengerDetailView: View {
                     .cancel()
                 ]
             )
+        }
+        .alert("Error", isPresented: $routeViewModel.showErrorAlert) {
+            Button("OK") {
+                routeViewModel.clearError()
+            }
+            if routeViewModel.showRetryButton {
+                Button("Retry") {
+                    Task {
+                        await routeViewModel.retryLastOperation()
+                    }
+                }
+            }
+        } message: {
+            Text(routeViewModel.errorMessage)
         }
     }
 }
@@ -410,14 +422,11 @@ struct PassengerDetailView_Previews: PreviewProvider {
             PassengerDetailView(passenger: Passenger(
                 recid: "12345",
                 name: "John Doe",
-                pickupLocation: "123 Main St, Anytown, USA",
-                dropoffLocation: "456 Oak Ave, Somewhere, USA",
-                scheduledPickup: "Today, 9:00 AM",
-                scheduledDropoff: "Today, 10:30 AM",
+                address: "123 Main St, Anytown, USA",
                 status: .pending,
-                medicalNotes: "Please call when you arrive. Ring the doorbell twice.",
                 contactInfo: "(555) 123-4567",
-                wheelchairFlag: true
+                gender: 1,
+                city: "Anytown"
             ))
             .environmentObject(RouteViewModel())
         }

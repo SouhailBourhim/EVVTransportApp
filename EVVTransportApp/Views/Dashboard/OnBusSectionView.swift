@@ -59,6 +59,13 @@ struct OnBusSectionView: View {
                     Text("No passengers on bus")
                         .foregroundColor(.gray)
                         .font(.title3)
+                    if routeViewModel.pendingPassengers.isEmpty {
+                        Text("All passengers have been processed")
+                            .foregroundColor(.secondary)
+                            .font(.caption)
+                            .multilineTextAlignment(.center)
+                            .padding(.horizontal)
+                    }
                     Spacer()
                 }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)

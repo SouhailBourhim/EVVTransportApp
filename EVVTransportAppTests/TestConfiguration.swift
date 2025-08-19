@@ -7,6 +7,7 @@
 
 import Foundation
 import XCTest
+@testable import EVVTransportApp
 
 // MARK: - Test Configuration
 
@@ -143,7 +144,7 @@ extension XCTestCase {
     func measureAsyncPerformance(
         name: String,
         iterations: Int = 5,
-        operation: () async throws -> Void
+        operation: @escaping () async throws -> Void
     ) async rethrows {
         let options = XCTMeasureOptions()
         options.iterationCount = iterations
@@ -172,7 +173,7 @@ extension TestConfiguration {
             "William Anderson", "Jessica Thomas", "James Jackson", "Ashley White"
         ]
         
-        let locations = [
+        let addresses = [
             "123 Main St, Bronx NY 10451",
             "456 Grand Concourse, Bronx NY 10458",
             "789 Webster Ave, Bronx NY 10456",
@@ -181,30 +182,23 @@ extension TestConfiguration {
             "888 Third Ave, Bronx NY 10456"
         ]
         
-        let times = [
-            "08:00 AM", "08:30 AM", "09:00 AM", "09:30 AM",
-            "10:00 AM", "10:30 AM", "11:00 AM", "11:30 AM"
+        let cities = [
+            "Bronx", "Manhattan", "Brooklyn", "Queens", "Staten Island"
         ]
         
         return (1...count).map { index in
             let randomName = names.randomElement() ?? "Test User \(index)"
-            let randomPickup = locations.randomElement() ?? "Test Location"
-            let randomDropoff = locations.randomElement() ?? "Test Destination"
-            let randomPickupTime = times.randomElement() ?? "09:00 AM"
-            let randomDropoffTime = times.randomElement() ?? "10:00 AM"
+            let randomAddress = addresses.randomElement() ?? "Test Address"
             let randomStatus = PassengerStatus.allCases.randomElement() ?? .pending
             
             return Passenger(
                 recid: String(format: "%03d", index),
                 name: randomName,
-                pickupLocation: randomPickup,
-                dropoffLocation: randomDropoff,
-                scheduledPickup: randomPickupTime,
-                scheduledDropoff: randomDropoffTime,
+                address: randomAddress,
                 status: randomStatus,
-                medicalNotes: index % 4 == 0 ? "Special medical requirements" : nil,
                 contactInfo: "(555) \(String(format: "%03d", Int.random(in: 100...999)))-\(String(format: "%04d", Int.random(in: 1000...9999)))",
-                wheelchairFlag: index % 5 == 0
+                gender: Int.random(in: 0...1),
+                city: cities.randomElement() ?? "Test City"
             )
         }
     }

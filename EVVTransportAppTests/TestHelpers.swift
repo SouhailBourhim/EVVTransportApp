@@ -9,58 +9,38 @@ import Foundation
 import XCTest
 @testable import EVVTransportApp
 
-// MARK: - Mock Data Helpers
+// MARK: - Test Helpers
 
-struct MockDataHelper {
-    
-    static func createMockUser(username: String = "testuser", routeId: String = "ROUTE_001") -> User {
-        return User(username: username, routeId: routeId)
-    }
-    
-    static func createMockPassenger(
-        recid: String = "001",
-        name: String = "Test Passenger",
-        status: PassengerStatus = .pending,
-        wheelchairFlag: Bool = false
-    ) -> Passenger {
-        return Passenger(
-            recid: recid,
-            name: name,
-            pickupLocation: "123 Test Street, Test City",
-            dropoffLocation: "456 Test Avenue, Test City",
-            scheduledPickup: "09:00 AM",
-            scheduledDropoff: "10:00 AM",
-            status: status,
-            medicalNotes: wheelchairFlag ? "Wheelchair accessible required" : nil,
-            contactInfo: "(555) 123-4567",
-            wheelchairFlag: wheelchairFlag
-        )
-    }
-    
-    static func createMockPassengers(count: Int) -> [Passenger] {
-        return (1...count).map { index in
-            let status: PassengerStatus = index % 3 == 0 ? .pickedUp : .pending
-            return createMockPassenger(
-                recid: String(format: "%03d", index),
-                name: "Test Passenger \(index)",
-                status: status,
-                wheelchairFlag: index % 5 == 0
-            )
-        }
-    }
-    
-    static func createMockStatusUpdate(
-        recid: String = "001",
-        status: String = "picked up",
-        latitude: Double = 40.7128,
-        longitude: Double = -74.0060
-    ) -> StatusUpdate {
-        return StatusUpdate(
-            recid: recid,
-            status: status,
-            datetime: ISO8601DateFormatter().string(from: Date()),
-            latitude: latitude,
-            longitude: longitude
+func createMockPassenger(
+    recid: String = "123",
+    name: String = "Test Passenger",
+    address: String = "123 Test St",
+    status: PassengerStatus = .pending,
+    contactInfo: String? = "(555) 123-4567",
+    gender: Int = 1,
+    city: String = "Test City"
+) -> Passenger {
+    return Passenger(
+        recid: recid,
+        name: name,
+        address: address,
+        status: status,
+        contactInfo: contactInfo,
+        gender: gender,
+        city: city
+    )
+}
+
+func createMockPassengers(count: Int) -> [Passenger] {
+    return (0..<count).map { index in
+        Passenger(
+            recid: "\(index + 1)",
+            name: "Passenger \(index + 1)",
+            address: "\(index + 1) Test St",
+            status: index % 3 == 0 ? .pickedUp : .pending,
+            contactInfo: index % 2 == 0 ? "(555) 123-\(String(format: "%04d", index))" : nil,
+            gender: index % 2,
+            city: "City \(index + 1)"
         )
     }
 }
@@ -195,24 +175,25 @@ class MockNetworkService: NetworkService {
             throw NetworkError.invalidCredentials
         }
         
-        return MockDataHelper.createMockUser(username: username)
+        return User(username: username, routeId: "ROUTE_001", driverName: "Test Driver", sessionId: "session_test")
     }
     
-    override func fetchPassengers() async throws -> [Passenger] {
+    override func fetchPassengers(routeId: String) async throws -> [Passenger] {
         if shouldFailFetchPassengers {
             throw NetworkError.networkFailure
         }
         
-        return mockPassengers.isEmpty ? MockDataHelper.createMockPassengers(count: 5) : mockPassengers
+        return mockPassengers.isEmpty ? createMockPassengers(count: 5) : mockPassengers
     }
     
-    override func updatePassengerStatus(_ statusUpdate: StatusUpdate) async throws {
+    override func updatePassengerStatus(_ statusUpdate: StatusUpdate) async throws -> Bool {
         if shouldFailStatusUpdate {
             throw NetworkError.networkFailure
         }
         
         // Simulate successful update
         try await Task.sleep(nanoseconds: 100_000_000) // 0.1 seconds
+        return true
     }
 }
 

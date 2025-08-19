@@ -25,6 +25,9 @@ final class NetworkServiceTests: XCTestCase {
         
         XCTAssertEqual(user.username, "testuser")
         XCTAssertEqual(user.routeId, "ROUTE_TESTUSER")
+        XCTAssertEqual(user.driverName, "Driver Testuser")
+        XCTAssertNotNil(user.sessionId)
+        XCTAssertTrue(user.sessionId?.hasPrefix("session_") == true)
     }
     
     func testLoginWithEmptyCredentials() async throws {
@@ -61,7 +64,7 @@ final class NetworkServiceTests: XCTestCase {
     }
     
     func testFetchPassengers() async throws {
-        let passengers = try await networkService.fetchPassengers()
+        let passengers = try await networkService.fetchPassengers(routeId: "ROUTE_001")
         
         XCTAssertFalse(passengers.isEmpty)
         XCTAssertGreaterThan(passengers.count, 0)
@@ -72,18 +75,18 @@ final class NetworkServiceTests: XCTestCase {
         XCTAssertFalse(firstPassenger.name.isEmpty)
         XCTAssertFalse(firstPassenger.pickupLocation.isEmpty)
         XCTAssertFalse(firstPassenger.dropoffLocation.isEmpty)
-        XCTAssertFalse(firstPassenger.scheduledPickup.isEmpty)
-        XCTAssertFalse(firstPassenger.scheduledDropoff.isEmpty)
+        XCTAssertEqual(firstPassenger.scheduledPickup, "N/A")
+        XCTAssertEqual(firstPassenger.scheduledDropoff, "N/A")
     }
     
     func testFetchPassengersContainsExpectedData() async throws {
-        let passengers = try await networkService.fetchPassengers()
+        let passengers = try await networkService.fetchPassengers(routeId: "ROUTE_001")
         
         // Check for specific mock data
         let mariaRodriguez = passengers.first { $0.name == "Maria Rodriguez" }
         XCTAssertNotNil(mariaRodriguez)
         XCTAssertEqual(mariaRodriguez?.recid, "001")
-        XCTAssertTrue(mariaRodriguez?.wheelchairFlag == true)
+        XCTAssertEqual(mariaRodriguez?.gender, 1)
         XCTAssertEqual(mariaRodriguez?.status, .pending)
         
         let sarahJohnson = passengers.first { $0.name == "Sarah Johnson" }
@@ -95,7 +98,6 @@ final class NetworkServiceTests: XCTestCase {
         let statusUpdate = StatusUpdate(
             recid: "001",
             status: "picked up",
-            datetime: ISO8601DateFormatter().string(from: Date()),
             latitude: 40.7128,
             longitude: -74.0060
         )
@@ -109,7 +111,7 @@ final class NetworkServiceTests: XCTestCase {
         XCTAssertEqual(NetworkError.networkFailure.errorDescription, "Network connection failed. Please check your internet connection.")
         XCTAssertEqual(NetworkError.invalidResponse.errorDescription, "Invalid server response")
         XCTAssertEqual(NetworkError.unauthorized.errorDescription, "Session expired. Please log in again.")
-        XCTAssertEqual(NetworkError.serverError.errorDescription, "Server error. Please try again later.")
+        XCTAssertEqual(NetworkError.serverError("Test error").errorDescription, "Test error")
     }
     
     func testSingletonInstance() throws {

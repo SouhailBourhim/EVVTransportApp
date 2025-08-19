@@ -12,11 +12,11 @@ struct DashboardView: View {
         let formatter = DateFormatter()
         formatter.timeStyle = .short
         formatter.dateStyle = .none
-        lastSyncTime = "Last sync: \(formatter.string(from: Date()))"
+        lastSyncTime = "Last sync: \(formatter.string(from: routeViewModel.lastSyncTime))"
     }
     
     private func refreshData() async {
-        await routeViewModel.loadPassengers()
+        await routeViewModel.forceRefresh()
         updateLastSyncTime()
     }
     
@@ -43,15 +43,25 @@ struct DashboardView: View {
                         // Profile button
                         Menu {
                             Button(action: { showingSyncInfo = true }) {
-                                Label("Sync Now", systemImage: "arrow.clockwise")
+                                Label("Sync Info", systemImage: "info.circle")
                             }
+                            Button(action: { Task { await refreshData() } }) {
+                                Label("Force Refresh", systemImage: "arrow.clockwise")
+                            }
+                            .disabled(routeViewModel.isSyncing)
                             Button(role: .destructive, action: { authViewModel.logout() }) {
                                 Label("Sign Out", systemImage: "rectangle.portrait.and.arrow.right")
                             }
                         } label: {
-                            Image(systemName: "person.circle.fill")
-                                .font(.title2)
-                                .foregroundColor(.blue)
+                            HStack(spacing: 4) {
+                                if routeViewModel.isSyncing {
+                                    ProgressView()
+                                        .scaleEffect(0.8)
+                                }
+                                Image(systemName: "person.circle.fill")
+                                    .font(.title2)
+                                    .foregroundColor(.blue)
+                            }
                         }
                     }
                     .padding([.horizontal, .top])
@@ -91,15 +101,22 @@ struct DashboardView: View {
             .task {
                 await routeViewModel.loadPassengers()
             }
-            .alert("Error", isPresented: .constant(!routeViewModel.errorMessage.isEmpty)) {
+            .alert("Error", isPresented: $routeViewModel.showErrorAlert) {
                 Button("OK") {
-                    routeViewModel.errorMessage = ""
+                    routeViewModel.clearError()
+                }
+                if routeViewModel.showRetryButton {
+                    Button("Retry") {
+                        Task {
+                            await routeViewModel.retryLastOperation()
+                        }
+                    }
                 }
             } message: {
                 Text(routeViewModel.errorMessage)
             }
             .overlay(
-                Group {
+                VStack {
                     if routeViewModel.showStatusNotification {
                         Text(routeViewModel.statusNotificationMessage)
                             .padding()
@@ -110,14 +127,26 @@ struct DashboardView: View {
                             .transition(.move(edge: .top).combined(with: .opacity))
                             .animation(.easeInOut, value: routeViewModel.showStatusNotification)
                             .padding(.top, 44)
-                            .zIndex(1)
                             .onTapGesture {
                                 withAnimation {
                                     routeViewModel.showStatusNotification = false
                                 }
                             }
                     }
-                },
+                    
+                    if routeViewModel.showSuccessMessage {
+                        Text(routeViewModel.successMessage)
+                            .padding()
+                            .background(Color.blue.opacity(0.9))
+                            .foregroundColor(.white)
+                            .cornerRadius(10)
+                            .shadow(radius: 10)
+                            .transition(.move(edge: .top).combined(with: .opacity))
+                            .animation(.easeInOut, value: routeViewModel.showSuccessMessage)
+                            .padding(.top, 44)
+                    }
+                }
+                .frame(maxWidth: .infinity, alignment: .top),
                 alignment: .top
             )
         }
