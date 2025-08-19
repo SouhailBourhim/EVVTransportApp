@@ -75,7 +75,6 @@ class AuthViewModel: ObservableObject {
         currentRouteId = routeId
         isAuthenticated = true
         
-        print("✅ Session restored for user: \(user.username), route: \(routeId)")
         return true
     }
     
@@ -129,8 +128,8 @@ class AuthViewModel: ObservableObject {
     
     func validateCurrentSession() -> Bool {
         guard isAuthenticated,
-              let user = currentUser,
-              let routeId = currentRouteId,
+              currentUser != nil,
+              currentRouteId != nil,
               dataService.isTokenValid() else {
             // Session is invalid, clear it
             logout()
