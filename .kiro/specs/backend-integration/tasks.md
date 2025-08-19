@@ -2,7 +2,7 @@
 
 - [x] 1. Update Constants and Base Configuration
 
-  - Update Constants.swift to use the actual backend URL (http://advantecis-csmwebservicebus.com)
+  - Update Constants.swift to use the actual backend URL [http://...] 
   - Add proper API endpoint paths and configuration values
   - Remove placeholder comments and set production-ready values
   - _Requirements: 1.1, 7.1_
