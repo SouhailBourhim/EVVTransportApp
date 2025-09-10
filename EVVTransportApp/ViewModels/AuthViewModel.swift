@@ -41,10 +41,10 @@ class AuthViewModel: ObservableObject {
             
         } catch let error as NetworkError {
             // Handle backend-specific error messages
-            showError(error.errorDescription ?? Constants.ErrorMessages.loginFailed)
+            handleAuthError(error.errorDescription ?? Constants.ErrorMessages.loginFailed)
         } catch {
             // Handle generic errors
-            showError(error.localizedDescription)
+            handleAuthError(error.localizedDescription)
         }
         
         isLoading = false
@@ -60,6 +60,29 @@ class AuthViewModel: ObservableObject {
         currentRouteId = nil
         isAuthenticated = false
         errorMessage = ""
+        showErrorAlert = false
+        showSuccessMessage = false
+        successMessage = ""
+        
+        print("✅ User logged out successfully")
+    }
+    
+    /// Clears session data without showing error messages (for silent cleanup)
+    private func clearSessionSilently() {
+        // Clear backend authentication
+        networkService.clearAuthToken()
+        dataService.clearAllData()
+        
+        // Clear local state
+        currentUser = nil
+        currentRouteId = nil
+        isAuthenticated = false
+        errorMessage = ""
+        showErrorAlert = false
+        showSuccessMessage = false
+        successMessage = ""
+        
+        print("🔇 Session cleared silently")
     }
     
     func checkExistingSession() -> Bool {
@@ -67,6 +90,8 @@ class AuthViewModel: ObservableObject {
         guard dataService.isTokenValid(),
               let user = dataService.loadUserSession(),
               let routeId = dataService.getCurrentRouteId() else {
+            // Clear any invalid session data silently (don't show error messages)
+            clearSessionSilently()
             return false
         }
         
@@ -137,6 +162,32 @@ class AuthViewModel: ObservableObject {
         }
         
         return true
+    }
+    
+    /// Handles authentication errors and clears invalid sessions
+    func handleAuthError(_ error: String) {
+        // Check if this is an access denied error
+        if error.lowercased().contains("access denied") || 
+           error.lowercased().contains("unauthorized") ||
+           error.lowercased().contains("token") {
+            // Clear the invalid session
+            logout()
+            showError("Session expired. Please log in again.")
+        } else {
+            showError(error)
+        }
+    }
+    
+    /// Handles authentication errors without showing messages (for silent handling)
+    func handleAuthErrorSilently(_ error: String) {
+        // Check if this is an access denied error
+        if error.lowercased().contains("access denied") || 
+           error.lowercased().contains("unauthorized") ||
+           error.lowercased().contains("token") {
+            // Clear the invalid session silently
+            clearSessionSilently()
+        }
+        // Don't show any error messages
     }
     
     // MARK: - Route Management

@@ -92,6 +92,7 @@ struct DashboardView: View {
                         }
                         .frame(height: geometry.size.height)
                     }
+                    .clipped() // Ensure content doesn't overflow
                 }
             }
             .navigationBarHidden(true)
@@ -151,6 +152,7 @@ struct DashboardView: View {
             )
         }
         .navigationViewStyle(StackNavigationViewStyle())
+        .ignoresSafeArea(.keyboard, edges: .bottom)
     }
 }
 

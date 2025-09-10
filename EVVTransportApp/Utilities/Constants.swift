@@ -3,6 +3,11 @@ import Foundation
 import SwiftUI
 
 struct Constants {
+    // MARK: - Developer Testing Configuration
+    /// Set to true to use mock data for testing when backend is unavailable
+    /// Set to false to use real backend API calls
+    static let useMockDataForTesting = false
+    
     // MARK: - App Configuration
     static let appVersion = "1.0.0"
     static let maxPassengers = 20

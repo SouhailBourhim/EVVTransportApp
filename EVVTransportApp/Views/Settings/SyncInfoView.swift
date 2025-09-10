@@ -10,97 +10,99 @@ struct SyncInfoView: View {
     
     var body: some View {
         NavigationView {
-            VStack(spacing: 28) {
-                VStack(spacing: 12) {
-                    Image(systemName: "arrow.triangle.2.circlepath")
-                        .font(.system(size: 60))
-                        .foregroundColor(Constants.UI.Colors.primaryBlue)
-                        .shadow(color: .blue.opacity(0.08), radius: 8, y: 4)
-                    Text("Sync Information")
-                        .font(.title)
-                        .fontWeight(.bold)
-                }
-                .padding(.top, 12)
-                
-                VStack(alignment: .leading, spacing: 20) {
-                    InfoItem(title: "App Version", value: Constants.appVersion, icon: "app.badge")
-                    
-                    InfoItem(
-                        title: "Last Synced", 
-                        value: routeViewModel.formatLastSyncTime(), 
-                        icon: "clock",
-                        subtitle: routeViewModel.getTimeSinceLastSync() < 60 ? "Just now" : "\(Int(routeViewModel.getTimeSinceLastSync() / 60)) minutes ago"
-                    )
-                    
-                    InfoItem(
-                        title: "Connection Status", 
-                        value: networkService.isNetworkAvailable ? "Connected" : "Offline", 
-                        icon: networkService.isNetworkAvailable ? "wifi" : "wifi.slash",
-                        valueColor: networkService.isNetworkAvailable ? .green : .red
-                    )
-                    
-                    InfoItem(title: "Total Passengers", value: "\(routeViewModel.passengers.count)", icon: "person.3")
-                    InfoItem(title: "On Bus", value: "\(routeViewModel.onBusPassengers.count)", icon: "figure.walk")
-                    InfoItem(title: "Pending Pickup", value: "\(routeViewModel.pendingPassengers.count)", icon: "clock.badge")
-                    
-                    if let user = authViewModel.currentUser {
-                        InfoItem(title: "Driver", value: user.driverName ?? user.username, icon: "person.circle")
-                        InfoItem(title: "Route ID", value: user.routeId, icon: "map")
+            ScrollView {
+                VStack(spacing: 16) {
+                    // Header - more compact
+                    VStack(spacing: 8) {
+                        Image(systemName: "arrow.triangle.2.circlepath")
+                            .font(.system(size: 40))
+                            .foregroundColor(Constants.UI.Colors.primaryBlue)
+                        Text("Sync Information")
+                            .font(.title2)
+                            .fontWeight(.bold)
                     }
-                }
-                .padding(20)
-                .background(Color(.systemBackground))
-                .cornerRadius(Constants.UI.cardCornerRadius)
-                .shadow(color: .black.opacity(0.08), radius: 8, x: 0, y: 4)
-                .padding(.horizontal)
-                
-                VStack(spacing: 12) {
-                    Button(action: {
-                        Task {
-                            await routeViewModel.forceRefresh()
+                    .padding(.top, 8)
+                    
+                    // Info items - more compact
+                    VStack(alignment: .leading, spacing: 12) {
+                        InfoItem(title: "App Version", value: Constants.appVersion, icon: "app.badge")
+                        
+                        InfoItem(
+                            title: "Last Synced", 
+                            value: routeViewModel.formatLastSyncTime(), 
+                            icon: "clock",
+                            subtitle: routeViewModel.getTimeSinceLastSync() < 60 ? "Just now" : "\(Int(routeViewModel.getTimeSinceLastSync() / 60)) minutes ago"
+                        )
+                        
+                        InfoItem(
+                            title: "Connection Status", 
+                            value: networkService.isNetworkAvailable ? "Connected" : "Offline", 
+                            icon: networkService.isNetworkAvailable ? "wifi" : "wifi.slash",
+                            valueColor: networkService.isNetworkAvailable ? .green : .red
+                        )
+                        
+                        InfoItem(title: "Total Passengers", value: "\(routeViewModel.passengers.count)", icon: "person.3")
+                        InfoItem(title: "On Bus", value: "\(routeViewModel.onBusPassengers.count)", icon: "figure.walk")
+                        InfoItem(title: "Pending Pickup", value: "\(routeViewModel.pendingPassengers.count)", icon: "clock.badge")
+                        
+                        if let user = authViewModel.currentUser {
+                            InfoItem(title: "Driver", value: user.driverName ?? user.username, icon: "person.circle")
+                            InfoItem(title: "Route ID", value: user.routeId, icon: "map")
                         }
-                    }) {
-                        HStack {
-                            if routeViewModel.isLoading {
-                                ProgressView()
-                                    .progressViewStyle(CircularProgressViewStyle(tint: .white))
-                                    .scaleEffect(0.8)
+                    }
+                    .padding(16)
+                    .background(Color(.systemBackground))
+                    .cornerRadius(Constants.UI.cardCornerRadius)
+                    .shadow(color: .black.opacity(0.08), radius: 8, x: 0, y: 4)
+                    .padding(.horizontal)
+                    
+                    // Action buttons - fixed at bottom
+                    VStack(spacing: 12) {
+                        Button(action: {
+                            Task {
+                                await routeViewModel.forceRefresh()
                             }
-                            Text("Force Refresh")
-                                .fontWeight(.semibold)
-                                .font(.title3)
+                        }) {
+                            HStack {
+                                if routeViewModel.isLoading {
+                                    ProgressView()
+                                        .progressViewStyle(CircularProgressViewStyle(tint: .white))
+                                        .scaleEffect(0.8)
+                                }
+                                Text("Force Refresh")
+                                    .fontWeight(.semibold)
+                                    .font(.title3)
+                            }
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 16)
+                            .background(Constants.UI.Colors.primaryBlue)
+                            .foregroundColor(.white)
+                            .cornerRadius(Constants.UI.buttonCornerRadius)
+                            .shadow(color: .blue.opacity(0.08), radius: 4, y: 2)
                         }
-                        .frame(maxWidth: .infinity)
-                        .padding(.vertical, 16)
-                        .background(Constants.UI.Colors.primaryBlue)
-                        .foregroundColor(.white)
-                        .cornerRadius(Constants.UI.buttonCornerRadius)
-                        .shadow(color: .blue.opacity(0.08), radius: 4, y: 2)
-                    }
-                    .disabled(routeViewModel.isLoading)
-                    
-                    Button(action: {
-                        showingLogoutConfirmation = true
-                    }) {
-                        HStack {
-                            Image(systemName: "rectangle.portrait.and.arrow.right")
-                            Text("Sign Out")
-                                .fontWeight(.semibold)
-                                .font(.title3)
+                        .disabled(routeViewModel.isLoading)
+                        
+                        Button(action: {
+                            showingLogoutConfirmation = true
+                        }) {
+                            HStack {
+                                Image(systemName: "rectangle.portrait.and.arrow.right")
+                                Text("Sign Out")
+                                    .fontWeight(.semibold)
+                                    .font(.title3)
+                            }
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 16)
+                            .background(Color.red)
+                            .foregroundColor(.white)
+                            .cornerRadius(Constants.UI.buttonCornerRadius)
+                            .shadow(color: .red.opacity(0.08), radius: 4, y: 2)
                         }
-                        .frame(maxWidth: .infinity)
-                        .padding(.vertical, 16)
-                        .background(Color.red)
-                        .foregroundColor(.white)
-                        .cornerRadius(Constants.UI.buttonCornerRadius)
-                        .shadow(color: .red.opacity(0.08), radius: 4, y: 2)
                     }
+                    .padding(.horizontal)
+                    .padding(.bottom, 20) // Extra padding at bottom for safe area
                 }
-                .padding(.horizontal)
-                
-                Spacer()
             }
-            .padding()
             .background(Color(.systemGroupedBackground).ignoresSafeArea())
             .navigationTitle("")
             .navigationBarTitleDisplayMode(.inline)
@@ -125,6 +127,45 @@ struct SyncInfoView: View {
         } message: {
             Text("Are you sure you want to sign out? This will clear all your session data and return you to the login screen.")
         }
+        .alert("Error", isPresented: $routeViewModel.showErrorAlert) {
+            Button("OK") {
+                routeViewModel.clearError()
+            }
+            if routeViewModel.showRetryButton {
+                Button("Retry") {
+                    Task {
+                        await routeViewModel.retryLastOperation()
+                    }
+                }
+            }
+        } message: {
+            Text(routeViewModel.errorMessage)
+        }
+        .overlay(
+            // Success notification overlay
+            Group {
+                if routeViewModel.showStatusNotification {
+                    VStack {
+                        Spacer()
+                        HStack {
+                            Text(routeViewModel.statusNotificationMessage)
+                                .font(.body)
+                                .fontWeight(.medium)
+                                .foregroundColor(.white)
+                                .padding(.horizontal, 16)
+                                .padding(.vertical, 12)
+                                .background(Color.green)
+                                .cornerRadius(8)
+                                .shadow(color: .black.opacity(0.2), radius: 4, x: 0, y: 2)
+                        }
+                        .padding(.horizontal, 20)
+                        .padding(.bottom, 100) // Position above the buttons
+                        .transition(.move(edge: .bottom).combined(with: .opacity))
+                        .animation(.easeInOut(duration: 0.3), value: routeViewModel.showStatusNotification)
+                    }
+                }
+            }
+        )
     }
 }
 

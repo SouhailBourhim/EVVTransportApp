@@ -5,154 +5,252 @@ struct LoginView: View {
     @State private var username = ""
     @State private var password = ""
     @State private var isPasswordVisible = false
+    @State private var keyboardHeight: CGFloat = 0
     @FocusState private var focusedField: Field?
     
     enum Field: Hashable {
         case username, password
     }
     
+    // ScrollView reader for keyboard handling
+    @Namespace private var scrollSpace
+    
     var body: some View {
         ZStack {
-            // Background Gradient
-            LinearGradient(gradient: Gradient(colors: [Color.blue.opacity(0.2), Color.blue.opacity(0.05)]), 
-                         startPoint: .top, 
-                         endPoint: .bottom)
-                .edgesIgnoringSafeArea(.all)
+            // Enhanced Background Gradient
+            LinearGradient(
+                gradient: Gradient(colors: [
+                    Color.blue.opacity(0.3),
+                    Color.blue.opacity(0.1),
+                    Color.white.opacity(0.9)
+                ]),
+                startPoint: .topLeading,
+                endPoint: .bottomTrailing
+            )
+            .ignoresSafeArea(.all)
             
-            ScrollView {
-                VStack(spacing: 24) {
-                    // Logo and Title
-                    VStack(spacing: 16) {
-                        ZStack {
-                            Circle()
-                                .fill(Color.blue.opacity(0.1))
-                                .frame(width: 120, height: 120)
-                            
-                            Image(systemName: "bus.fill")
-                                .font(.system(size: 60))
-                                .foregroundStyle(LinearGradient(
-                                    colors: [.blue, .blue.opacity(0.7)],
-                                    startPoint: .topLeading,
-                                    endPoint: .bottomTrailing
-                                ))
-                        }
-                        .padding(.top, 40)
-                        
-                        Text("Welcome Back!")
-                            .font(.largeTitle)
-                            .fontWeight(.bold)
-                            .foregroundColor(.primary)
-                        
-                        Text("Log in to continue")
-                            .font(.subheadline)
-                            .foregroundColor(.secondary)
-                    }
+            // Scrollable Content
+            ScrollViewReader { proxy in
+                ScrollView {
+                    VStack(spacing: 0) {
+                    // Top Spacer for centering when keyboard is hidden
+                    Spacer(minLength: 60)
                     
-                    // Form Fields
-                    VStack(spacing: 20) {
-                        // Username Field
-                        VStack(alignment: .leading, spacing: 6) {
-                            Text("Username")
-                                .font(.subheadline)
-                                .foregroundColor(.secondary)
-                            
-                            HStack {
-                                Image(systemName: "person.circle.fill")
-                                    .foregroundColor(.blue.opacity(0.7))
+                    // Centered Content Container
+                    VStack(spacing: 32) {
+                        // Logo and Branding
+                        VStack(spacing: 20) {
+                            // Enhanced Logo
+                            ZStack {
+                                Circle()
+                                    .fill(
+                                        LinearGradient(
+                                            colors: [Color.blue.opacity(0.2), Color.blue.opacity(0.1)],
+                                            startPoint: .topLeading,
+                                            endPoint: .bottomTrailing
+                                        )
+                                    )
+                                    .frame(width: 100, height: 100)
+                                    .shadow(color: Color.blue.opacity(0.2), radius: 10, x: 0, y: 5)
                                 
-                                TextField("Enter your username", text: $username)
-                                    .textFieldStyle(.plain)
-                                    .focused($focusedField, equals: .username)
-                                    .submitLabel(.next)
-                                    .onSubmit { focusedField = .password }
+                                Image(systemName: "bus.fill")
+                                    .font(.system(size: 45, weight: .medium))
+                                    .foregroundStyle(
+                                        LinearGradient(
+                                            colors: [.blue, .blue.opacity(0.8)],
+                                            startPoint: .topLeading,
+                                            endPoint: .bottomTrailing
+                                        )
+                                    )
                             }
-                            .padding()
-                            .background(Color(.systemBackground))
-                            .cornerRadius(12)
-                            .shadow(color: Color.black.opacity(0.05), radius: 5, x: 0, y: 2)
+                            
+                            // Enhanced Typography
+                            VStack(spacing: 8) {
+                                Text("EVV Transport")
+                                    .font(.system(size: 28, weight: .bold, design: .rounded))
+                                    .foregroundColor(.primary)
+                                
+                                Text("Driver Portal")
+                                    .font(.system(size: 16, weight: .medium))
+                                    .foregroundColor(.secondary)
+                                    .padding(.horizontal, 16)
+                                    .padding(.vertical, 6)
+                                    .background(Color.blue.opacity(0.1))
+                                    .cornerRadius(20)
+                            }
                         }
                         
-                        // Password Field
-                        VStack(alignment: .leading, spacing: 6) {
-                            Text("Password")
-                                .font(.subheadline)
-                                .foregroundColor(.secondary)
-                            
-                            HStack {
-                                Image(systemName: "lock.fill")
-                                    .foregroundColor(.blue.opacity(0.7))
+                        // Form Container
+                        VStack(spacing: 24) {
+                            // Username Field
+                            VStack(alignment: .leading, spacing: 8) {
+                                Text("Username")
+                                    .font(.system(size: 14, weight: .semibold))
+                                    .foregroundColor(.primary)
                                 
-                                if isPasswordVisible {
-                                    TextField("Enter your password", text: $password)
+                                HStack(spacing: 12) {
+                                    Image(systemName: "person.circle.fill")
+                                        .font(.system(size: 18))
+                                        .foregroundColor(.blue)
+                                    
+                                    TextField("Enter your username", text: $username)
+                                        .font(.system(size: 16))
+                                        .textFieldStyle(.plain)
+                                        .focused($focusedField, equals: .username)
+                                        .submitLabel(.next)
+                                        .onSubmit { focusedField = .password }
+                                    
+                                    Spacer()
+                                }
+                                .padding(.horizontal, 16)
+                                .padding(.vertical, 14)
+                                .background(
+                                    RoundedRectangle(cornerRadius: 12)
+                                        .fill(Color(.systemBackground))
+                                        .shadow(color: Color.black.opacity(0.08), radius: 8, x: 0, y: 4)
+                                )
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 12)
+                                        .stroke(focusedField == .username ? Color.blue.opacity(0.3) : Color.clear, lineWidth: 2)
+                                )
+                            }
+                            
+                            // Password Field
+                            VStack(alignment: .leading, spacing: 8) {
+                                Text("Password")
+                                    .font(.system(size: 14, weight: .semibold))
+                                    .foregroundColor(.primary)
+                                
+                                HStack(spacing: 12) {
+                                    Image(systemName: "lock.fill")
+                                        .font(.system(size: 18))
+                                        .foregroundColor(.blue)
+                                    
+                                    if isPasswordVisible {
+                                        TextField("Enter your password", text: $password)
+                                            .font(.system(size: 16))
+                                    } else {
+                                        SecureField("Enter your password", text: $password)
+                                            .font(.system(size: 16))
+                                    }
+                                    
+                                    Button(action: { isPasswordVisible.toggle() }) {
+                                        Image(systemName: isPasswordVisible ? "eye.slash.fill" : "eye.fill")
+                                            .font(.system(size: 16))
+                                            .foregroundColor(.secondary)
+                                            .frame(width: 24, height: 24)
+                                    }
+                                }
+                                .padding(.horizontal, 16)
+                                .padding(.vertical, 14)
+                                .background(
+                                    RoundedRectangle(cornerRadius: 12)
+                                        .fill(Color(.systemBackground))
+                                        .shadow(color: Color.black.opacity(0.08), radius: 8, x: 0, y: 4)
+                                )
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 12)
+                                        .stroke(focusedField == .password ? Color.blue.opacity(0.3) : Color.clear, lineWidth: 2)
+                                )
+                                .focused($focusedField, equals: .password)
+                            }
+                        }
+                        
+                        // Error Message
+                        if !authViewModel.errorMessage.isEmpty {
+                            HStack(spacing: 8) {
+                                Image(systemName: "exclamationmark.triangle.fill")
+                                    .font(.system(size: 14))
+                                    .foregroundColor(.red)
+                                
+                                Text(authViewModel.errorMessage)
+                                    .font(.system(size: 14, weight: .medium))
+                                    .foregroundColor(.red)
+                                    .multilineTextAlignment(.leading)
+                            }
+                            .padding(.horizontal, 16)
+                            .padding(.vertical, 12)
+                            .background(
+                                RoundedRectangle(cornerRadius: 10)
+                                    .fill(Color.red.opacity(0.1))
+                                    .overlay(
+                                        RoundedRectangle(cornerRadius: 10)
+                                            .stroke(Color.red.opacity(0.2), lineWidth: 1)
+                                    )
+                            )
+                            .transition(.opacity.combined(with: .scale))
+                        }
+                        
+                        // Enhanced Login Button
+                        Button(action: login) {
+                            HStack(spacing: 12) {
+                                if authViewModel.isLoading {
+                                    ProgressView()
+                                        .progressViewStyle(CircularProgressViewStyle(tint: .white))
+                                        .scaleEffect(0.9)
                                 } else {
-                                    SecureField("Enter your password", text: $password)
+                                    Image(systemName: "arrow.right.circle.fill")
+                                        .font(.system(size: 18))
                                 }
                                 
-                                Button(action: { isPasswordVisible.toggle() }) {
-                                    Image(systemName: isPasswordVisible ? "eye.slash.fill" : "eye.fill")
-                                        .foregroundColor(.secondary)
-                                }
+                                Text(authViewModel.isLoading ? "Signing In..." : "Sign In")
+                                    .font(.system(size: 16, weight: .semibold))
                             }
-                            .padding()
-                            .background(Color(.systemBackground))
-                            .cornerRadius(12)
-                            .shadow(color: Color.black.opacity(0.05), radius: 5, x: 0, y: 2)
-                            .focused($focusedField, equals: .password)
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 16)
+                            .background(
+                                LinearGradient(
+                                    gradient: Gradient(colors: [
+                                        Color.blue,
+                                        Color.blue.opacity(0.8)
+                                    ]),
+                                    startPoint: .leading,
+                                    endPoint: .trailing
+                                )
+                            )
+                            .foregroundColor(.white)
+                            .cornerRadius(14)
+                            .shadow(color: .blue.opacity(0.4), radius: 12, x: 0, y: 6)
+                            .scaleEffect(authViewModel.isLoading ? 0.98 : 1.0)
+                            .opacity(authViewModel.isLoading ? 0.8 : 1.0)
                         }
-                        
-
+                        .disabled(authViewModel.isLoading || username.isEmpty || password.isEmpty)
+                        .opacity((username.isEmpty || password.isEmpty) ? 0.6 : 1.0)
                     }
-                    .padding(.horizontal)
-                    
-                    // Error Message
-                    if !authViewModel.errorMessage.isEmpty {
-                        HStack {
-                            Image(systemName: "exclamationmark.triangle.fill")
-                                .foregroundColor(.red)
-                            Text(authViewModel.errorMessage)
-                                .foregroundColor(.red)
-                                .font(.caption)
-                                .transition(.opacity)
-                        }
-                        .padding()
-                        .background(Color.red.opacity(0.1))
-                        .cornerRadius(8)
-                        .padding(.horizontal)
-                    }
-                    
-                    // Login Button
-                    Button(action: login) {
-                        HStack {
-                            if authViewModel.isLoading {
-                                ProgressView()
-                                    .progressViewStyle(CircularProgressViewStyle(tint: .white))
-                            } else {
-                                Text("Log In")
-                                    .fontWeight(.semibold)
-                            }
-                        }
-                        .scaleEffect(0.8)
-                    }
-                    .frame(maxWidth: .infinity)
-                    .padding()
+                    .padding(.horizontal, 32)
+                    .padding(.vertical, 40)
                     .background(
-                        LinearGradient(
-                            gradient: Gradient(colors: [.blue, .blue.opacity(0.8)]),
-                            startPoint: .leading,
-                            endPoint: .trailing
-                        )
+                        RoundedRectangle(cornerRadius: 20)
+                            .fill(Color(.systemBackground))
+                            .shadow(color: Color.black.opacity(0.1), radius: 20, x: 0, y: 10)
                     )
-                    .foregroundColor(.white)
-                    .cornerRadius(12)
-                    .shadow(color: .blue.opacity(0.3), radius: 10, x: 0, y: 5)
-                    .scaleEffect(authViewModel.isLoading ? 0.98 : 1.0)
-                    .opacity(authViewModel.isLoading ? 0.8 : 1.0)
-                    .disabled(authViewModel.isLoading)
-                    .padding(.top, 8)
+                    .padding(.horizontal, 20)
+                    .id(scrollSpace)
+                    
+                    // Bottom Spacer for keyboard space
+                    Spacer(minLength: keyboardHeight > 0 ? keyboardHeight + 20 : 100)
                 }
-                .padding()
+                .frame(minHeight: UIScreen.main.bounds.height)
+                }
+                .scrollIndicators(.hidden)
+                .onChange(of: focusedField) { oldValue, newValue in
+                    if newValue != nil {
+                        withAnimation(.easeInOut(duration: 0.3)) {
+                            proxy.scrollTo(scrollSpace, anchor: .center)
+                        }
+                    }
+                }
             }
-            .navigationBarHidden(true)
+        }
+        .navigationBarHidden(true)
+        .onTapGesture {
+            focusedField = nil
+        }
+        .onAppear {
+            setupKeyboardObservers()
+        }
+        .onDisappear {
+            removeKeyboardObservers()
         }
     }
     
@@ -162,6 +260,32 @@ struct LoginView: View {
                 await authViewModel.login(username: username, password: password)
             }
         }
+    }
+    
+    // MARK: - Keyboard Handling
+    private func setupKeyboardObservers() {
+        NotificationCenter.default.addObserver(
+            forName: UIResponder.keyboardWillShowNotification,
+            object: nil,
+            queue: .main
+        ) { notification in
+            if let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect {
+                keyboardHeight = keyboardFrame.height
+            }
+        }
+        
+        NotificationCenter.default.addObserver(
+            forName: UIResponder.keyboardWillHideNotification,
+            object: nil,
+            queue: .main
+        ) { _ in
+            keyboardHeight = 0
+        }
+    }
+    
+    private func removeKeyboardObservers() {
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
     }
 }
 

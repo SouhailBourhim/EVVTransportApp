@@ -6,12 +6,14 @@ struct SearchBar: View {
     var placeholder: String
     
     var body: some View {
-        HStack {
+        HStack(spacing: 8) {
             Image(systemName: "magnifyingglass")
                 .foregroundColor(.secondary)
+                .font(.system(size: 16))
             
             TextField(placeholder, text: $text)
                 .textFieldStyle(PlainTextFieldStyle())
+                .font(.body)
             
             if !text.isEmpty {
                 Button(action: {
@@ -19,12 +21,18 @@ struct SearchBar: View {
                 }) {
                     Image(systemName: "xmark.circle.fill")
                         .foregroundColor(.secondary)
+                        .font(.system(size: 16))
                 }
             }
         }
-        .padding(8)
+        .padding(.horizontal, 12)
+        .padding(.vertical, 10)
         .background(Color(.systemGray6))
-        .cornerRadius(10)
+        .cornerRadius(12)
+        .overlay(
+            RoundedRectangle(cornerRadius: 12)
+                .stroke(Color(.systemGray4), lineWidth: 1)
+        )
     }
 }
 
@@ -158,7 +166,8 @@ struct PendingPickupSectionView: View {
             // Search and filter bar
             VStack(spacing: 12) {
                 SearchBar(text: $searchText, placeholder: "Search pending pickups...")
-                    .padding(.horizontal)
+                    .padding(.horizontal, 16)
+                    .zIndex(1) // Ensure it's on top
                 
                 // Sort options
                 ScrollView(.horizontal, showsIndicators: false) {

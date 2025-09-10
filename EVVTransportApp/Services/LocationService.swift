@@ -52,16 +52,16 @@ class LocationService: NSObject, ObservableObject {
     // MARK: - Location Availability Checking
     
     func checkLocationAvailability() -> Bool {
-        // Check if location services are enabled
-        guard CLLocationManager.locationServicesEnabled() else {
-            locationError = .locationServicesDisabled
+        // Check if we have permission (this is safe to call on main thread)
+        guard authorizationStatus == .authorizedWhenInUse || authorizationStatus == .authorizedAlways else {
+            locationError = .permissionDenied
             locationAvailable = false
             return false
         }
         
-        // Check if we have permission
-        guard authorizationStatus == .authorizedWhenInUse || authorizationStatus == .authorizedAlways else {
-            locationError = .permissionDenied
+        // Check if location services are enabled (use authorizationStatus as proxy)
+        guard authorizationStatus != .denied && authorizationStatus != .restricted else {
+            locationError = .locationServicesDisabled
             locationAvailable = false
             return false
         }
@@ -97,14 +97,14 @@ class LocationService: NSObject, ObservableObject {
     // MARK: - GPS Validation
     
     func validateLocationForStatusUpdate() -> LocationValidationResult {
-        // Check if location services are enabled
-        guard CLLocationManager.locationServicesEnabled() else {
-            return .failure(.locationServicesDisabled)
-        }
-        
-        // Check if we have permission
+        // Check if we have permission (this is safe to call on main thread)
         guard authorizationStatus == .authorizedWhenInUse || authorizationStatus == .authorizedAlways else {
             return .failure(.permissionDenied)
+        }
+        
+        // Check if location services are enabled (use authorizationStatus as proxy)
+        guard authorizationStatus != .denied && authorizationStatus != .restricted else {
+            return .failure(.locationServicesDisabled)
         }
         
         // Check if we have a current location
@@ -167,8 +167,8 @@ class LocationService: NSObject, ObservableObject {
     }
     
     func getValidatedLocation() async -> LocationValidationResult {
-        // Try to get current location
-        guard let location = await getCurrentLocation() else {
+        // Try to get current location first
+        guard await getCurrentLocation() != nil else {
             return .failure(.noLocationAvailable)
         }
         

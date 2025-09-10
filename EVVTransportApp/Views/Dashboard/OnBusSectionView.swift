@@ -18,10 +18,12 @@ struct OnBusSectionView: View {
     
     var body: some View {
         VStack(spacing: 0) {
-            // Search bar
+            // Search bar - always visible
             SearchBar(text: $searchText, placeholder: "Search passengers...")
-                .padding(.horizontal)
+                .padding(.horizontal, 16)
                 .padding(.vertical, 8)
+                .background(Color(.systemBackground))
+                .zIndex(1) // Ensure it's on top
             
             // Header with count badge
             HStack {
@@ -50,6 +52,7 @@ struct OnBusSectionView: View {
             
             Divider().frame(height: 2).background(Color(.systemGray5))
             
+            // Content area - always show search functionality
             if routeViewModel.onBusPassengers.isEmpty {
                 VStack {
                     Spacer()

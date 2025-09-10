@@ -8,6 +8,9 @@ struct EVVTransportAppApp: App {
             ContentView()
                 .environmentObject(AuthViewModel())
                 .environmentObject(RouteViewModel())
+                .environmentObject(NetworkService.shared)
+                .preferredColorScheme(.light)
         }
+        .windowResizability(.contentSize)
     }
 }

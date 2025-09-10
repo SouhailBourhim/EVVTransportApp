@@ -464,7 +464,8 @@
 				DEVELOPMENT_ASSET_PATHS = "\"EVVTransportApp/App/Preview Content\"";
 				DEVELOPMENT_TEAM = 7MPV3CPR5S;
 				ENABLE_PREVIEWS = YES;
-				GENERATE_INFOPLIST_FILE = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = EVVTransportApp/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -494,7 +495,8 @@
 				DEVELOPMENT_ASSET_PATHS = "\"/Users/apple/Desktop/EVVTransportApp/EVVTransportApp/App/Preview Content\"";
 				DEVELOPMENT_TEAM = 7MPV3CPR5S;
 				ENABLE_PREVIEWS = YES;
-				GENERATE_INFOPLIST_FILE = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = EVVTransportApp/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

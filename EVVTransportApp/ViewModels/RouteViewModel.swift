@@ -106,8 +106,7 @@ class RouteViewModel: ObservableObject {
             return
         }
         
-        // Store original passenger state for rollback
-        let originalPassenger = passenger
+        // Store original passengers state for rollback
         let originalPassengers = passengers
         
         // Optimistic UI update - immediately show the change
@@ -286,16 +285,16 @@ class RouteViewModel: ObservableObject {
             statusNotificationMessage = "✓ Status updated for \(passenger.name)"
         }
         
-        showStatusNotification = true
-        
-        // Hide notification after 3 seconds
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-            withAnimation {
-                self.showStatusNotification = false
+                showStatusNotification = true
+                
+                // Hide notification after 3 seconds
+                DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                    withAnimation {
+                        self.showStatusNotification = false
+                    }
+                }
             }
-        }
-    }
-    
+            
     private func autoSyncAfterStatusUpdate() async {
         // Re-fetch passenger data to ensure UI is in sync with backend
         do {
