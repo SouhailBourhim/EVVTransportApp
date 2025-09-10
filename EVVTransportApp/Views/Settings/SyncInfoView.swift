@@ -50,10 +50,10 @@ struct SyncInfoView: View {
                             InfoItem(title: "Route ID", value: user.routeId, icon: "map")
                         }
                     }
-                    .padding(16)
-                    .background(Color(.systemBackground))
-                    .cornerRadius(Constants.UI.cardCornerRadius)
-                    .shadow(color: .black.opacity(0.08), radius: 8, x: 0, y: 4)
+                .padding(16)
+                .background(Constants.UI.Colors.cardBackground)
+                .cornerRadius(Constants.UI.cardCornerRadius)
+                .shadow(color: Constants.UI.Colors.primaryText.opacity(0.08), radius: 8, x: 0, y: 4)
                     .padding(.horizontal)
                     
                     // Action buttons - fixed at bottom
@@ -75,8 +75,8 @@ struct SyncInfoView: View {
                             }
                             .frame(maxWidth: .infinity)
                             .padding(.vertical, 16)
-                            .background(Constants.UI.Colors.primaryBlue)
-                            .foregroundColor(.white)
+                        .background(Constants.UI.Colors.buttonBackground)
+                        .foregroundColor(Constants.UI.Colors.buttonText)
                             .cornerRadius(Constants.UI.buttonCornerRadius)
                             .shadow(color: .blue.opacity(0.08), radius: 4, y: 2)
                         }
@@ -93,8 +93,8 @@ struct SyncInfoView: View {
                             }
                             .frame(maxWidth: .infinity)
                             .padding(.vertical, 16)
-                            .background(Color.red)
-                            .foregroundColor(.white)
+                        .background(Constants.UI.Colors.destructiveButtonBackground)
+                        .foregroundColor(Constants.UI.Colors.destructiveButtonText)
                             .cornerRadius(Constants.UI.buttonCornerRadius)
                             .shadow(color: .red.opacity(0.08), radius: 4, y: 2)
                         }
@@ -103,7 +103,7 @@ struct SyncInfoView: View {
                     .padding(.bottom, 20) // Extra padding at bottom for safe area
                 }
             }
-            .background(Color(.systemGroupedBackground).ignoresSafeArea())
+            .background(Constants.UI.Colors.groupedBackground.ignoresSafeArea())
             .navigationTitle("")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
@@ -111,7 +111,7 @@ struct SyncInfoView: View {
                     Button(action: { dismiss() }) {
                         Image(systemName: "xmark.circle.fill")
                             .font(.title2)
-                            .foregroundColor(.secondary)
+                            .foregroundColor(Constants.UI.Colors.secondaryText)
                     }
                     .accessibilityLabel("Close")
                 }
@@ -204,7 +204,7 @@ struct InfoItem: View {
                 if let subtitle = subtitle {
                     Text(subtitle)
                         .font(.caption2)
-                        .foregroundColor(.secondary)
+                        .foregroundColor(Constants.UI.Colors.secondaryText)
                 }
             }
             

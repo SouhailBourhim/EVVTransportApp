@@ -27,11 +27,11 @@ struct SearchBar: View {
         }
         .padding(.horizontal, 12)
         .padding(.vertical, 10)
-        .background(Color(.systemGray6))
+        .background(Constants.UI.Colors.searchBarBackground)
         .cornerRadius(12)
         .overlay(
             RoundedRectangle(cornerRadius: 12)
-                .stroke(Color(.systemGray4), lineWidth: 1)
+                .stroke(Constants.UI.Colors.searchBarBorder, lineWidth: 1)
         )
     }
 }
@@ -65,7 +65,7 @@ struct StatBadge: View {
         }
         .padding(8)
         .frame(minWidth: 80)
-        .background(Color(.secondarySystemBackground))
+        .background(Constants.UI.Colors.secondaryBackground)
         .cornerRadius(8)
     }
 }
@@ -84,7 +84,7 @@ struct SortOptionView: View {
                 .foregroundColor(isSelected ? .white : .primary)
                 .padding(.horizontal, 12)
                 .padding(.vertical, 6)
-                .background(isSelected ? Color.blue : Color(.systemGray5))
+                .background(isSelected ? Constants.UI.Colors.primaryBlue : Constants.UI.Colors.searchBarBackground)
                 .cornerRadius(12)
         }
         .buttonStyle(PlainButtonStyle())
@@ -119,7 +119,7 @@ struct EmptyStateView: View {
         }
         .padding(40)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(Color(.systemGroupedBackground))
+        .background(Constants.UI.Colors.groupedBackground)
     }
 }
 
@@ -184,7 +184,7 @@ struct PendingPickupSectionView: View {
                 }
             }
             .padding(.vertical, 8)
-            .background(Color(.systemBackground))
+            .background(Constants.UI.Colors.background)
             
             // Header with count badge
             HStack {
@@ -209,7 +209,7 @@ struct PendingPickupSectionView: View {
             }
             .padding(.horizontal)
             .padding(.vertical, 8)
-            .background(Color(.systemBackground))
+            .background(Constants.UI.Colors.background)
             
             if filteredPassengers.isEmpty {
                 if routeViewModel.pendingPassengers.isEmpty {

@@ -23,7 +23,7 @@ struct DashboardView: View {
     var body: some View {
         NavigationView {
             ZStack(alignment: .top) {
-                Color(.systemGroupedBackground)
+                Constants.UI.Colors.groupedBackground
                     .edgesIgnoringSafeArea(.all)
                 
                 VStack(spacing: 0) {
@@ -66,8 +66,8 @@ struct DashboardView: View {
                     }
                     .padding([.horizontal, .top])
                     .padding(.bottom, 8)
-                    .background(Color(.systemBackground))
-                    .shadow(color: Color.black.opacity(0.05), radius: 5, y: 2)
+                    .background(Constants.UI.Colors.background)
+                    .shadow(color: Constants.UI.Colors.primaryText.opacity(0.05), radius: 5, y: 2)
 
                     GeometryReader { geometry in
                         VStack(spacing: 0) {
@@ -76,9 +76,9 @@ struct DashboardView: View {
                                 OnBusSectionView()
                             }
                             .frame(height: geometry.size.height / 2)
-                            .background(Color(.systemBackground))
+                            .background(Constants.UI.Colors.background)
                             .clipShape(RoundedRectangle(cornerRadius: 0))
-                            .shadow(color: Color.black.opacity(0.03), radius: 2, y: 1)
+                            .shadow(color: Constants.UI.Colors.primaryText.opacity(0.03), radius: 2, y: 1)
 
                             Divider()
 
@@ -87,7 +87,7 @@ struct DashboardView: View {
                                 PendingPickupSectionView()
                             }
                             .frame(height: geometry.size.height / 2)
-                            .background(Color(.systemBackground))
+                            .background(Constants.UI.Colors.background)
                             .clipShape(RoundedRectangle(cornerRadius: 0))
                         }
                         .frame(height: geometry.size.height)

@@ -17,12 +17,12 @@ struct LoginView: View {
     
     var body: some View {
         ZStack {
-            // Enhanced Background Gradient
+            // Enhanced Background Gradient - Dark Mode Compatible
             LinearGradient(
                 gradient: Gradient(colors: [
-                    Color.blue.opacity(0.3),
-                    Color.blue.opacity(0.1),
-                    Color.white.opacity(0.9)
+                    Constants.UI.Colors.primaryBlue.opacity(0.3),
+                    Constants.UI.Colors.primaryBlue.opacity(0.1),
+                    Constants.UI.Colors.background.opacity(0.9)
                 ]),
                 startPoint: .topLeading,
                 endPoint: .bottomTrailing
@@ -45,19 +45,19 @@ struct LoginView: View {
                                 Circle()
                                     .fill(
                                         LinearGradient(
-                                            colors: [Color.blue.opacity(0.2), Color.blue.opacity(0.1)],
+                                            colors: [Constants.UI.Colors.primaryBlue.opacity(0.2), Constants.UI.Colors.primaryBlue.opacity(0.1)],
                                             startPoint: .topLeading,
                                             endPoint: .bottomTrailing
                                         )
                                     )
                                     .frame(width: 100, height: 100)
-                                    .shadow(color: Color.blue.opacity(0.2), radius: 10, x: 0, y: 5)
+                                    .shadow(color: Constants.UI.Colors.primaryBlue.opacity(0.2), radius: 10, x: 0, y: 5)
                                 
                                 Image(systemName: "bus.fill")
                                     .font(.system(size: 45, weight: .medium))
                                     .foregroundStyle(
                                         LinearGradient(
-                                            colors: [.blue, .blue.opacity(0.8)],
+                                            colors: [Constants.UI.Colors.primaryBlue, Constants.UI.Colors.primaryBlue.opacity(0.8)],
                                             startPoint: .topLeading,
                                             endPoint: .bottomTrailing
                                         )
@@ -68,14 +68,14 @@ struct LoginView: View {
                             VStack(spacing: 8) {
                                 Text("EVV Transport")
                                     .font(.system(size: 28, weight: .bold, design: .rounded))
-                                    .foregroundColor(.primary)
+                                    .foregroundColor(Constants.UI.Colors.primaryText)
                                 
                                 Text("Driver Portal")
                                     .font(.system(size: 16, weight: .medium))
-                                    .foregroundColor(.secondary)
+                                    .foregroundColor(Constants.UI.Colors.secondaryText)
                                     .padding(.horizontal, 16)
                                     .padding(.vertical, 6)
-                                    .background(Color.blue.opacity(0.1))
+                                    .background(Constants.UI.Colors.primaryBlue.opacity(0.1))
                                     .cornerRadius(20)
                             }
                         }
@@ -86,12 +86,12 @@ struct LoginView: View {
                             VStack(alignment: .leading, spacing: 8) {
                                 Text("Username")
                                     .font(.system(size: 14, weight: .semibold))
-                                    .foregroundColor(.primary)
+                                    .foregroundColor(Constants.UI.Colors.primaryText)
                                 
                                 HStack(spacing: 12) {
                                     Image(systemName: "person.circle.fill")
                                         .font(.system(size: 18))
-                                        .foregroundColor(.blue)
+                                        .foregroundColor(Constants.UI.Colors.primaryBlue)
                                     
                                     TextField("Enter your username", text: $username)
                                         .font(.system(size: 16))
@@ -106,12 +106,12 @@ struct LoginView: View {
                                 .padding(.vertical, 14)
                                 .background(
                                     RoundedRectangle(cornerRadius: 12)
-                                        .fill(Color(.systemBackground))
-                                        .shadow(color: Color.black.opacity(0.08), radius: 8, x: 0, y: 4)
+                                        .fill(Constants.UI.Colors.background)
+                                        .shadow(color: Constants.UI.Colors.primaryText.opacity(0.08), radius: 8, x: 0, y: 4)
                                 )
                                 .overlay(
                                     RoundedRectangle(cornerRadius: 12)
-                                        .stroke(focusedField == .username ? Color.blue.opacity(0.3) : Color.clear, lineWidth: 2)
+                                        .stroke(focusedField == .username ? Constants.UI.Colors.primaryBlue.opacity(0.3) : Color.clear, lineWidth: 2)
                                 )
                             }
                             
@@ -119,12 +119,12 @@ struct LoginView: View {
                             VStack(alignment: .leading, spacing: 8) {
                                 Text("Password")
                                     .font(.system(size: 14, weight: .semibold))
-                                    .foregroundColor(.primary)
+                                    .foregroundColor(Constants.UI.Colors.primaryText)
                                 
                                 HStack(spacing: 12) {
                                     Image(systemName: "lock.fill")
                                         .font(.system(size: 18))
-                                        .foregroundColor(.blue)
+                                        .foregroundColor(Constants.UI.Colors.primaryBlue)
                                     
                                     if isPasswordVisible {
                                         TextField("Enter your password", text: $password)
@@ -137,7 +137,7 @@ struct LoginView: View {
                                     Button(action: { isPasswordVisible.toggle() }) {
                                         Image(systemName: isPasswordVisible ? "eye.slash.fill" : "eye.fill")
                                             .font(.system(size: 16))
-                                            .foregroundColor(.secondary)
+                                            .foregroundColor(Constants.UI.Colors.secondaryText)
                                             .frame(width: 24, height: 24)
                                     }
                                 }
@@ -145,12 +145,12 @@ struct LoginView: View {
                                 .padding(.vertical, 14)
                                 .background(
                                     RoundedRectangle(cornerRadius: 12)
-                                        .fill(Color(.systemBackground))
-                                        .shadow(color: Color.black.opacity(0.08), radius: 8, x: 0, y: 4)
+                                        .fill(Constants.UI.Colors.background)
+                                        .shadow(color: Constants.UI.Colors.primaryText.opacity(0.08), radius: 8, x: 0, y: 4)
                                 )
                                 .overlay(
                                     RoundedRectangle(cornerRadius: 12)
-                                        .stroke(focusedField == .password ? Color.blue.opacity(0.3) : Color.clear, lineWidth: 2)
+                                        .stroke(focusedField == .password ? Constants.UI.Colors.primaryBlue.opacity(0.3) : Color.clear, lineWidth: 2)
                                 )
                                 .focused($focusedField, equals: .password)
                             }

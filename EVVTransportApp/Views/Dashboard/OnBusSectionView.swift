@@ -22,7 +22,7 @@ struct OnBusSectionView: View {
             SearchBar(text: $searchText, placeholder: "Search passengers...")
                 .padding(.horizontal, 16)
                 .padding(.vertical, 8)
-                .background(Color(.systemBackground))
+                .background(Constants.UI.Colors.background)
                 .zIndex(1) // Ensure it's on top
             
             // Header with count badge
@@ -48,9 +48,9 @@ struct OnBusSectionView: View {
             }
             .padding(.horizontal)
             .padding(.vertical, 8)
-            .background(Color(.systemBackground))
+            .background(Constants.UI.Colors.background)
             
-            Divider().frame(height: 2).background(Color(.systemGray5))
+            Divider().frame(height: 2).background(Constants.UI.Colors.separator)
             
             // Content area - always show search functionality
             if routeViewModel.onBusPassengers.isEmpty {
@@ -58,13 +58,13 @@ struct OnBusSectionView: View {
                     Spacer()
                     Image(systemName: "bus")
                         .font(.system(size: 50))
-                        .foregroundColor(.gray)
+                        .foregroundColor(Constants.UI.Colors.secondaryText)
                     Text("No passengers on bus")
-                        .foregroundColor(.gray)
+                        .foregroundColor(Constants.UI.Colors.secondaryText)
                         .font(.title3)
                     if routeViewModel.pendingPassengers.isEmpty {
                         Text("All passengers have been processed")
-                            .foregroundColor(.secondary)
+                            .foregroundColor(Constants.UI.Colors.tertiaryText)
                             .font(.caption)
                             .multilineTextAlignment(.center)
                             .padding(.horizontal)
@@ -95,7 +95,7 @@ struct OnBusSectionView: View {
                     .padding(.bottom, 24) // Extra padding for button visibility
                 }
             }
-            Divider().frame(height: 4).background(Color(.systemGray5))
+            Divider().frame(height: 4).background(Constants.UI.Colors.separator)
         }
         .frame(maxHeight: .infinity)
         .sheet(item: $selectedPassenger) { passenger in

@@ -50,13 +50,45 @@ struct Constants {
         static let buttonCornerRadius: CGFloat = 12.0
         static let defaultPadding: CGFloat = 16.0
         
-        // Colors
+        // Colors - Dark Mode Compatible
         struct Colors {
+            // Primary colors that work in both light and dark mode
             static let primaryBlue = Color.blue
             static let successGreen = Color.green
             static let warningOrange = Color.orange
             static let errorRed = Color.red
             static let secondaryGray = Color.gray
+            
+            // Dark mode specific colors
+            static let background = Color(.systemBackground)
+            static let secondaryBackground = Color(.secondarySystemBackground)
+            static let groupedBackground = Color(.systemGroupedBackground)
+            static let tertiaryBackground = Color(.tertiarySystemBackground)
+            
+            // Text colors
+            static let primaryText = Color(.label)
+            static let secondaryText = Color(.secondaryLabel)
+            static let tertiaryText = Color(.tertiaryLabel)
+            static let placeholderText = Color(.placeholderText)
+            
+            // System colors
+            static let separator = Color(.separator)
+            static let opaqueSeparator = Color(.opaqueSeparator)
+            static let link = Color(.link)
+            
+            // Card and surface colors
+            static let cardBackground = Color(.systemBackground)
+            static let cardSecondaryBackground = Color(.secondarySystemBackground)
+            
+            // Search bar colors
+            static let searchBarBackground = Color(.systemGray6)
+            static let searchBarBorder = Color(.systemGray4)
+            
+            // Button colors
+            static let buttonBackground = Color(.systemBlue)
+            static let buttonText = Color.white
+            static let destructiveButtonBackground = Color.red
+            static let destructiveButtonText = Color.white
         }
         
         // Animations
