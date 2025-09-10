@@ -53,39 +53,126 @@ struct Constants {
         // Colors - Dark Mode Compatible
         struct Colors {
             // Primary colors that work in both light and dark mode
-            static let primaryBlue = Color.blue
+            static let primaryBlue = Color.accentColor
             static let successGreen = Color.green
             static let warningOrange = Color.orange
             static let errorRed = Color.red
             static let secondaryGray = Color.gray
             
-            // Dark mode specific colors
-            static let background = Color(.systemBackground)
-            static let secondaryBackground = Color(.secondarySystemBackground)
-            static let groupedBackground = Color(.systemGroupedBackground)
-            static let tertiaryBackground = Color(.tertiarySystemBackground)
+            // Modern color scheme - adaptive with better visual appeal
+            static let background = Color(UIColor.systemBackground)
+            static let secondaryBackground = Color(UIColor.secondarySystemBackground)
+            static let groupedBackground = Color(UIColor.systemGroupedBackground)
+            static let tertiaryBackground = Color(UIColor.tertiarySystemBackground)
             
-            // Text colors
-            static let primaryText = Color(.label)
-            static let secondaryText = Color(.secondaryLabel)
-            static let tertiaryText = Color(.tertiaryLabel)
-            static let placeholderText = Color(.placeholderText)
+            // Pure black dark mode
+            static let primaryBackground = Color(UIColor { traitCollection in
+                switch traitCollection.userInterfaceStyle {
+                case .dark:
+                    return UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 1.0) // Pure black
+                default:
+                    return UIColor(red: 0.98, green: 0.98, blue: 0.99, alpha: 1.0)
+                }
+            })
+            static let secondaryBackgroundEnhanced = Color(UIColor { traitCollection in
+                switch traitCollection.userInterfaceStyle {
+                case .dark:
+                    return UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 1.0) // Pure black
+                default:
+                    return UIColor(red: 0.95, green: 0.96, blue: 0.98, alpha: 1.0)
+                }
+            })
+            static let cardBackgroundEnhanced = Color(UIColor { traitCollection in
+                switch traitCollection.userInterfaceStyle {
+                case .dark:
+                    return UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 1.0) // Pure black
+                default:
+                    return UIColor(red: 0.99, green: 0.99, blue: 1.0, alpha: 1.0)
+                }
+            })
+            
+            // Additional dark mode colors for better contrast
+            static let darkModeAccent = Color(UIColor { traitCollection in
+                switch traitCollection.userInterfaceStyle {
+                case .dark:
+                    return UIColor(red: 0.25, green: 0.25, blue: 0.26, alpha: 1.0) // Subtle accent
+                default:
+                    return UIColor(red: 0.92, green: 0.92, blue: 0.93, alpha: 1.0)
+                }
+            })
+            
+            static let darkModeBorder = Color(UIColor { traitCollection in
+                switch traitCollection.userInterfaceStyle {
+                case .dark:
+                    return UIColor(red: 0.30, green: 0.30, blue: 0.31, alpha: 1.0) // Subtle borders
+                default:
+                    return UIColor(red: 0.85, green: 0.85, blue: 0.86, alpha: 1.0)
+                }
+            })
+            
+            // Simple text colors for clean dark mode
+            static let primaryText = Color(UIColor { traitCollection in
+                switch traitCollection.userInterfaceStyle {
+                case .dark:
+                    return UIColor(red: 0.95, green: 0.95, blue: 0.95, alpha: 1.0) // Clean white
+                default:
+                    return UIColor.label
+                }
+            })
+            static let secondaryText = Color(UIColor { traitCollection in
+                switch traitCollection.userInterfaceStyle {
+                case .dark:
+                    return UIColor(red: 0.70, green: 0.70, blue: 0.70, alpha: 1.0) // Light grey
+                default:
+                    return UIColor.secondaryLabel
+                }
+            })
+            static let tertiaryText = Color(UIColor { traitCollection in
+                switch traitCollection.userInterfaceStyle {
+                case .dark:
+                    return UIColor(red: 0.55, green: 0.55, blue: 0.55, alpha: 1.0) // Medium grey
+                default:
+                    return UIColor.tertiaryLabel
+                }
+            })
+            static let placeholderText = Color(UIColor { traitCollection in
+                switch traitCollection.userInterfaceStyle {
+                case .dark:
+                    return UIColor(red: 0.45, green: 0.45, blue: 0.45, alpha: 1.0) // Dark grey
+                default:
+                    return UIColor.placeholderText
+                }
+            })
             
             // System colors
-            static let separator = Color(.separator)
-            static let opaqueSeparator = Color(.opaqueSeparator)
-            static let link = Color(.link)
+            static let separator = Color(UIColor.separator)
+            static let opaqueSeparator = Color(UIColor.opaqueSeparator)
+            static let link = Color(UIColor.link)
             
             // Card and surface colors
-            static let cardBackground = Color(.systemBackground)
-            static let cardSecondaryBackground = Color(.secondarySystemBackground)
+            static let cardBackground = Color(UIColor.systemBackground)
+            static let cardSecondaryBackground = Color(UIColor.secondarySystemBackground)
             
-            // Search bar colors
-            static let searchBarBackground = Color(.systemGray6)
-            static let searchBarBorder = Color(.systemGray4)
+            // Pure black search bar colors for dark mode
+            static let searchBarBackground = Color(UIColor { traitCollection in
+                switch traitCollection.userInterfaceStyle {
+                case .dark:
+                    return UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 1.0) // Pure black
+                default:
+                    return UIColor.systemGray6
+                }
+            })
+            static let searchBarBorder = Color(UIColor { traitCollection in
+                switch traitCollection.userInterfaceStyle {
+                case .dark:
+                    return UIColor(red: 0.0, green: 0.0, blue: 0.0, alpha: 1.0) // Pure black
+                default:
+                    return UIColor.systemGray4
+                }
+            })
             
-            // Button colors
-            static let buttonBackground = Color(.systemBlue)
+            // Button colors - adaptive
+            static let buttonBackground = Color.accentColor
             static let buttonText = Color.white
             static let destructiveButtonBackground = Color.red
             static let destructiveButtonText = Color.white

@@ -59,6 +59,10 @@ struct SyncInfoView: View {
                     // Action buttons - fixed at bottom
                     VStack(spacing: 12) {
                         Button(action: {
+                            // Add haptic feedback
+                            let impactFeedback = UIImpactFeedbackGenerator(style: .light)
+                            impactFeedback.impactOccurred()
+                            
                             Task {
                                 await routeViewModel.forceRefresh()
                             }
@@ -66,7 +70,7 @@ struct SyncInfoView: View {
                             HStack {
                                 if routeViewModel.isLoading {
                                     ProgressView()
-                                        .progressViewStyle(CircularProgressViewStyle(tint: .white))
+                                        .progressViewStyle(CircularProgressViewStyle(tint: Constants.UI.Colors.buttonText))
                                         .scaleEffect(0.8)
                                 }
                                 Text("Force Refresh")
@@ -78,11 +82,15 @@ struct SyncInfoView: View {
                         .background(Constants.UI.Colors.buttonBackground)
                         .foregroundColor(Constants.UI.Colors.buttonText)
                             .cornerRadius(Constants.UI.buttonCornerRadius)
-                            .shadow(color: .blue.opacity(0.08), radius: 4, y: 2)
+                            .shadow(color: Constants.UI.Colors.primaryBlue.opacity(0.08), radius: 4, y: 2)
                         }
                         .disabled(routeViewModel.isLoading)
                         
                         Button(action: {
+                            // Add haptic feedback
+                            let impactFeedback = UIImpactFeedbackGenerator(style: .heavy)
+                            impactFeedback.impactOccurred()
+                            
                             showingLogoutConfirmation = true
                         }) {
                             HStack {
@@ -108,7 +116,13 @@ struct SyncInfoView: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button(action: { dismiss() }) {
+                    Button(action: { 
+                        // Add haptic feedback
+                        let impactFeedback = UIImpactFeedbackGenerator(style: .light)
+                        impactFeedback.impactOccurred()
+                        
+                        dismiss() 
+                    }) {
                         Image(systemName: "xmark.circle.fill")
                             .font(.title2)
                             .foregroundColor(Constants.UI.Colors.secondaryText)
@@ -151,7 +165,7 @@ struct SyncInfoView: View {
                             Text(routeViewModel.statusNotificationMessage)
                                 .font(.body)
                                 .fontWeight(.medium)
-                                .foregroundColor(.white)
+                                .foregroundColor(Constants.UI.Colors.destructiveButtonText)
                                 .padding(.horizontal, 16)
                                 .padding(.vertical, 12)
                                 .background(Color.green)
@@ -213,9 +227,17 @@ struct InfoItem: View {
     }
 }
 
-#Preview {
+#Preview("Light Mode") {
     SyncInfoView()
         .environmentObject(RouteViewModel())
         .environmentObject(AuthViewModel())
         .environmentObject(NetworkService.shared)
+}
+
+#Preview("Dark Mode") {
+    SyncInfoView()
+        .environmentObject(RouteViewModel())
+        .environmentObject(AuthViewModel())
+        .environmentObject(NetworkService.shared)
+        .preferredColorScheme(.dark)
 }

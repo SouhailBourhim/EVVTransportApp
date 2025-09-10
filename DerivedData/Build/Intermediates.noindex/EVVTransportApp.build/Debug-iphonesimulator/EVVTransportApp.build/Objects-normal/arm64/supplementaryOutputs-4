@@ -1,0 +1,18 @@
+"/Users/apple/Desktop/EVVTransportApp/EVVTransportApp/Utilities/Extensions.swift":
+  const-values: "/Users/apple/Desktop/EVVTransportApp/DerivedData/Build/Intermediates.noindex/EVVTransportApp.build/Debug-iphonesimulator/EVVTransportApp.build/Objects-normal/arm64/Extensions.swiftconstvalues"
+  diagnostics: "/Users/apple/Desktop/EVVTransportApp/DerivedData/Build/Intermediates.noindex/EVVTransportApp.build/Debug-iphonesimulator/EVVTransportApp.build/Objects-normal/arm64/Extensions.dia"
+  dependencies: "/Users/apple/Desktop/EVVTransportApp/DerivedData/Build/Intermediates.noindex/EVVTransportApp.build/Debug-iphonesimulator/EVVTransportApp.build/Objects-normal/arm64/Extensions.d"
+  object: "/Users/apple/Desktop/EVVTransportApp/DerivedData/Build/Intermediates.noindex/EVVTransportApp.build/Debug-iphonesimulator/EVVTransportApp.build/Objects-normal/arm64/Extensions.o"
+  swift-dependencies: "/Users/apple/Desktop/EVVTransportApp/DerivedData/Build/Intermediates.noindex/EVVTransportApp.build/Debug-iphonesimulator/EVVTransportApp.build/Objects-normal/arm64/Extensions.swiftdeps"
+"/Users/apple/Desktop/EVVTransportApp/EVVTransportApp/ViewModels/RouteViewModel.swift":
+  dependencies: "/Users/apple/Desktop/EVVTransportApp/DerivedData/Build/Intermediates.noindex/EVVTransportApp.build/Debug-iphonesimulator/EVVTransportApp.build/Objects-normal/arm64/RouteViewModel.d"
+  object: "/Users/apple/Desktop/EVVTransportApp/DerivedData/Build/Intermediates.noindex/EVVTransportApp.build/Debug-iphonesimulator/EVVTransportApp.build/Objects-normal/arm64/RouteViewModel.o"
+  swift-dependencies: "/Users/apple/Desktop/EVVTransportApp/DerivedData/Build/Intermediates.noindex/EVVTransportApp.build/Debug-iphonesimulator/EVVTransportApp.build/Objects-normal/arm64/RouteViewModel.swiftdeps"
+  diagnostics: "/Users/apple/Desktop/EVVTransportApp/DerivedData/Build/Intermediates.noindex/EVVTransportApp.build/Debug-iphonesimulator/EVVTransportApp.build/Objects-normal/arm64/RouteViewModel.dia"
+  const-values: "/Users/apple/Desktop/EVVTransportApp/DerivedData/Build/Intermediates.noindex/EVVTransportApp.build/Debug-iphonesimulator/EVVTransportApp.build/Objects-normal/arm64/RouteViewModel.swiftconstvalues"
+"/Users/apple/Desktop/EVVTransportApp/EVVTransportApp/Services/LocationService.swift":
+  dependencies: "/Users/apple/Desktop/EVVTransportApp/DerivedData/Build/Intermediates.noindex/EVVTransportApp.build/Debug-iphonesimulator/EVVTransportApp.build/Objects-normal/arm64/LocationService.d"
+  object: "/Users/apple/Desktop/EVVTransportApp/DerivedData/Build/Intermediates.noindex/EVVTransportApp.build/Debug-iphonesimulator/EVVTransportApp.build/Objects-normal/arm64/LocationService.o"
+  diagnostics: "/Users/apple/Desktop/EVVTransportApp/DerivedData/Build/Intermediates.noindex/EVVTransportApp.build/Debug-iphonesimulator/EVVTransportApp.build/Objects-normal/arm64/LocationService.dia"
+  const-values: "/Users/apple/Desktop/EVVTransportApp/DerivedData/Build/Intermediates.noindex/EVVTransportApp.build/Debug-iphonesimulator/EVVTransportApp.build/Objects-normal/arm64/LocationService.swiftconstvalues"
+  swift-dependencies: "/Users/apple/Desktop/EVVTransportApp/DerivedData/Build/Intermediates.noindex/EVVTransportApp.build/Debug-iphonesimulator/EVVTransportApp.build/Objects-normal/arm64/LocationService.swiftdeps"

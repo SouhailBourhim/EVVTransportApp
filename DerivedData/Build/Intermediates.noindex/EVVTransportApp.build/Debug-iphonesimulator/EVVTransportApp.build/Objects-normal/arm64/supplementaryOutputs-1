@@ -1,0 +1,18 @@
+"/Users/apple/Desktop/EVVTransportApp/EVVTransportApp/Models/Passenger.swift":
+  const-values: "/Users/apple/Desktop/EVVTransportApp/DerivedData/Build/Intermediates.noindex/EVVTransportApp.build/Debug-iphonesimulator/EVVTransportApp.build/Objects-normal/arm64/Passenger.swiftconstvalues"
+  object: "/Users/apple/Desktop/EVVTransportApp/DerivedData/Build/Intermediates.noindex/EVVTransportApp.build/Debug-iphonesimulator/EVVTransportApp.build/Objects-normal/arm64/Passenger.o"
+  swift-dependencies: "/Users/apple/Desktop/EVVTransportApp/DerivedData/Build/Intermediates.noindex/EVVTransportApp.build/Debug-iphonesimulator/EVVTransportApp.build/Objects-normal/arm64/Passenger.swiftdeps"
+  dependencies: "/Users/apple/Desktop/EVVTransportApp/DerivedData/Build/Intermediates.noindex/EVVTransportApp.build/Debug-iphonesimulator/EVVTransportApp.build/Objects-normal/arm64/Passenger.d"
+  diagnostics: "/Users/apple/Desktop/EVVTransportApp/DerivedData/Build/Intermediates.noindex/EVVTransportApp.build/Debug-iphonesimulator/EVVTransportApp.build/Objects-normal/arm64/Passenger.dia"
+"/Users/apple/Desktop/EVVTransportApp/EVVTransportApp/Views/PassengerDetail/PassengerDetailView.swift":
+  object: "/Users/apple/Desktop/EVVTransportApp/DerivedData/Build/Intermediates.noindex/EVVTransportApp.build/Debug-iphonesimulator/EVVTransportApp.build/Objects-normal/arm64/PassengerDetailView.o"
+  const-values: "/Users/apple/Desktop/EVVTransportApp/DerivedData/Build/Intermediates.noindex/EVVTransportApp.build/Debug-iphonesimulator/EVVTransportApp.build/Objects-normal/arm64/PassengerDetailView.swiftconstvalues"
+  dependencies: "/Users/apple/Desktop/EVVTransportApp/DerivedData/Build/Intermediates.noindex/EVVTransportApp.build/Debug-iphonesimulator/EVVTransportApp.build/Objects-normal/arm64/PassengerDetailView.d"
+  diagnostics: "/Users/apple/Desktop/EVVTransportApp/DerivedData/Build/Intermediates.noindex/EVVTransportApp.build/Debug-iphonesimulator/EVVTransportApp.build/Objects-normal/arm64/PassengerDetailView.dia"
+  swift-dependencies: "/Users/apple/Desktop/EVVTransportApp/DerivedData/Build/Intermediates.noindex/EVVTransportApp.build/Debug-iphonesimulator/EVVTransportApp.build/Objects-normal/arm64/PassengerDetailView.swiftdeps"
+"/Users/apple/Desktop/EVVTransportApp/EVVTransportApp/Utilities/Constants.swift":
+  const-values: "/Users/apple/Desktop/EVVTransportApp/DerivedData/Build/Intermediates.noindex/EVVTransportApp.build/Debug-iphonesimulator/EVVTransportApp.build/Objects-normal/arm64/Constants.swiftconstvalues"
+  object: "/Users/apple/Desktop/EVVTransportApp/DerivedData/Build/Intermediates.noindex/EVVTransportApp.build/Debug-iphonesimulator/EVVTransportApp.build/Objects-normal/arm64/Constants.o"
+  dependencies: "/Users/apple/Desktop/EVVTransportApp/DerivedData/Build/Intermediates.noindex/EVVTransportApp.build/Debug-iphonesimulator/EVVTransportApp.build/Objects-normal/arm64/Constants.d"
+  swift-dependencies: "/Users/apple/Desktop/EVVTransportApp/DerivedData/Build/Intermediates.noindex/EVVTransportApp.build/Debug-iphonesimulator/EVVTransportApp.build/Objects-normal/arm64/Constants.swiftdeps"
+  diagnostics: "/Users/apple/Desktop/EVVTransportApp/DerivedData/Build/Intermediates.noindex/EVVTransportApp.build/Debug-iphonesimulator/EVVTransportApp.build/Objects-normal/arm64/Constants.dia"

@@ -1,0 +1,64 @@
+{
+  "source": "/Users/apple/Desktop/EVVTransportApp/EVVTransportApp/Views/PassengerDetail/PassengerDetailView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Passenger Details",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 285
+        }
+      },
+      {
+        "comment": "",
+        "key": "Error",
+        "location": {
+          "startingColumn": 16,
+          "startingLine": 312
+        }
+      },
+      {
+        "comment": "",
+        "key": "SCHEDULE NOT AVAILABLE",
+        "location": {
+          "startingColumn": 42,
+          "startingLine": 201
+        }
+      },
+      {
+        "comment": "",
+        "key": "Scheduled times are not provided by the backend system",
+        "location": {
+          "startingColumn": 42,
+          "startingLine": 205
+        }
+      },
+      {
+        "comment": "",
+        "key": "Map View",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 298
+        }
+      },
+      {
+        "comment": "",
+        "key": "OK",
+        "location": {
+          "startingColumn": 20,
+          "startingLine": 313
+        }
+      },
+      {
+        "comment": "",
+        "key": "Retry",
+        "location": {
+          "startingColumn": 24,
+          "startingLine": 317
+        }
+      }
+    ]
+  },
+  "version": 1
+}

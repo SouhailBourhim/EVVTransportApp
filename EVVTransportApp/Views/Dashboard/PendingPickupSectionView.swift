@@ -1,5 +1,72 @@
 import SwiftUI
 
+// MARK: - Skeleton Components
+struct SkeletonView: View {
+    @State private var isAnimating = false
+    
+    var body: some View {
+        RoundedRectangle(cornerRadius: 8)
+            .fill(
+                LinearGradient(
+                    gradient: Gradient(colors: [
+                        Constants.UI.Colors.secondaryBackground,
+                        Constants.UI.Colors.secondaryBackground.opacity(0.6),
+                        Constants.UI.Colors.secondaryBackground
+                    ]),
+                    startPoint: .leading,
+                    endPoint: .trailing
+                )
+            )
+            .opacity(isAnimating ? 0.3 : 0.8)
+            .animation(
+                Animation.easeInOut(duration: 1.0)
+                    .repeatForever(autoreverses: true),
+                value: isAnimating
+            )
+            .onAppear {
+                isAnimating = true
+            }
+    }
+}
+
+struct SkeletonPassengerCard: View {
+    var body: some View {
+        VStack(spacing: 0) {
+            // Header skeleton
+            HStack(alignment: .top) {
+                // Profile placeholder skeleton
+                SkeletonView()
+                    .frame(width: 44, height: 44)
+                    .clipShape(Circle())
+                    .padding(.trailing, 12)
+                
+                // Passenger info skeleton
+                VStack(alignment: .leading, spacing: 4) {
+                    SkeletonView()
+                        .frame(width: 120, height: 20)
+                    
+                    SkeletonView()
+                        .frame(width: 80, height: 16)
+                    
+                    SkeletonView()
+                        .frame(width: 100, height: 16)
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
+            }
+            .padding()
+            
+            // Button skeleton
+            SkeletonView()
+                .frame(height: 50)
+                .padding(.horizontal)
+                .padding(.bottom)
+        }
+        .background(Constants.UI.Colors.background)
+        .cornerRadius(12)
+        .shadow(color: Constants.UI.Colors.primaryText.opacity(0.05), radius: 2, y: 1)
+    }
+}
+
 // MARK: - Search Bar
 struct SearchBar: View {
     @Binding var text: String
@@ -8,7 +75,7 @@ struct SearchBar: View {
     var body: some View {
         HStack(spacing: 8) {
             Image(systemName: "magnifyingglass")
-                .foregroundColor(.secondary)
+                .foregroundColor(Constants.UI.Colors.secondaryText)
                 .font(.system(size: 16))
             
             TextField(placeholder, text: $text)
@@ -20,7 +87,7 @@ struct SearchBar: View {
                     self.text = ""
                 }) {
                     Image(systemName: "xmark.circle.fill")
-                        .foregroundColor(.secondary)
+                        .foregroundColor(Constants.UI.Colors.secondaryText)
                         .font(.system(size: 16))
                 }
             }
@@ -53,14 +120,14 @@ struct StatBadge: View {
                 Text(value)
                     .font(.subheadline)
                     .fontWeight(.semibold)
-                    .foregroundColor(.primary)
+                    .foregroundColor(Constants.UI.Colors.primaryText)
                     .lineLimit(1)
             }
             
             Text(label.uppercased())
                 .font(.caption2)
                 .fontWeight(.medium)
-                .foregroundColor(.secondary)
+                .foregroundColor(Constants.UI.Colors.secondaryText)
                 .lineLimit(1)
         }
         .padding(8)
@@ -81,7 +148,7 @@ struct SortOptionView: View {
             Text(title)
                 .font(.caption)
                 .fontWeight(isSelected ? .semibold : .regular)
-                .foregroundColor(isSelected ? .white : .primary)
+                .foregroundColor(isSelected ? Constants.UI.Colors.buttonText : Constants.UI.Colors.primaryText)
                 .padding(.horizontal, 12)
                 .padding(.vertical, 6)
                 .background(isSelected ? Constants.UI.Colors.primaryBlue : Constants.UI.Colors.searchBarBackground)
@@ -108,11 +175,11 @@ struct EmptyStateView: View {
             VStack(spacing: 8) {
                 Text(title)
                     .font(.headline)
-                    .foregroundColor(.primary)
+                    .foregroundColor(Constants.UI.Colors.primaryText)
                 
                 Text(message)
                     .font(.subheadline)
-                    .foregroundColor(.secondary)
+                    .foregroundColor(Constants.UI.Colors.secondaryText)
                     .multilineTextAlignment(.center)
                     .padding(.horizontal, 32)
             }
@@ -201,7 +268,7 @@ struct PendingPickupSectionView: View {
                     Text("\(routeViewModel.pendingPassengers.count)")
                         .font(.subheadline)
                         .fontWeight(.semibold)
-                        .foregroundColor(.white)
+                        .foregroundColor(Constants.UI.Colors.buttonText)
                         .padding(.horizontal, 10)
                         .padding(.vertical, 4)
                         .background(Capsule().fill(Color.orange))
@@ -211,7 +278,18 @@ struct PendingPickupSectionView: View {
             .padding(.vertical, 8)
             .background(Constants.UI.Colors.background)
             
-            if filteredPassengers.isEmpty {
+            if routeViewModel.isLoading && routeViewModel.pendingPassengers.isEmpty {
+                // Show skeleton loading when loading and no data
+                ScrollView {
+                    LazyVStack(spacing: 16) {
+                        ForEach(0..<3, id: \.self) { _ in
+                            SkeletonPassengerCard()
+                        }
+                    }
+                    .padding(.horizontal)
+                    .padding(.bottom, 20)
+                }
+            } else if filteredPassengers.isEmpty {
                 if routeViewModel.pendingPassengers.isEmpty {
                     EmptyStateView(
                         icon: "checkmark.circle.fill",
@@ -224,7 +302,7 @@ struct PendingPickupSectionView: View {
                         icon: "magnifyingglass",
                         title: "No Results",
                         message: "No passengers match your search.",
-                        color: .gray
+                        color: Constants.UI.Colors.secondaryGray
                     )
                 }
             } else {
@@ -234,7 +312,7 @@ struct PendingPickupSectionView: View {
                             PassengerCardView(
                                 passenger: passenger,
                                 buttonTitle: "Mark as Picked Up",
-                                buttonColor: .blue,
+                                buttonColor: Constants.UI.Colors.primaryBlue,
                                 action: {
                                     Task {
                                         await routeViewModel.updatePassengerStatus(passenger, to: .pickedUp)
@@ -258,7 +336,13 @@ struct PendingPickupSectionView: View {
     }
 }
 
-#Preview {
+#Preview("Light Mode") {
     PendingPickupSectionView()
         .environmentObject(RouteViewModel())
+}
+
+#Preview("Dark Mode") {
+    PendingPickupSectionView()
+        .environmentObject(RouteViewModel())
+        .preferredColorScheme(.dark)
 }

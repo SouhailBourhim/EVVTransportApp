@@ -5,7 +5,7 @@ struct PassengerDetailView: View {
     @Environment(\.dismiss) private var dismiss
     @State private var showActionSheet = false
     @State private var selectedAction: ActionType?
-    @State private var showMap = false
+    @State private var showContactError = false
     @EnvironmentObject var routeViewModel: RouteViewModel
     
     enum ActionType: String, Identifiable {
@@ -85,6 +85,119 @@ struct PassengerDetailView: View {
         }
     }
     
+    private func handleContactAction(_ action: ActionType) {
+        guard let phoneNumber = passenger.contactInfo, !phoneNumber.isEmpty else {
+            // Show alert for missing phone number
+            showContactError = true
+            return
+        }
+        
+        // Clean phone number (remove spaces, dashes, etc.)
+        let cleanPhoneNumber = phoneNumber.replacingOccurrences(of: "[^0-9+]", with: "", options: .regularExpression)
+        
+        switch action {
+        case .call:
+            makePhoneCall(phoneNumber: cleanPhoneNumber)
+        case .message:
+            sendMessage(phoneNumber: cleanPhoneNumber)
+        case .email:
+            // Email functionality would go here if email was available
+            break
+        case .cancel:
+            break
+        }
+    }
+    
+    private func makePhoneCall(phoneNumber: String) {
+        // Add haptic feedback
+        let impactFeedback = UIImpactFeedbackGenerator(style: .medium)
+        impactFeedback.impactOccurred()
+        
+        // Create phone URL
+        let phoneURL = URL(string: "tel:\(phoneNumber)")
+        
+        if let phoneURL = phoneURL, UIApplication.shared.canOpenURL(phoneURL) {
+            UIApplication.shared.open(phoneURL)
+        } else {
+            // Handle case where phone calling is not available
+            print("❌ Cannot make phone call to \(phoneNumber)")
+        }
+    }
+    
+    private func sendMessage(phoneNumber: String) {
+        // Add haptic feedback
+        let impactFeedback = UIImpactFeedbackGenerator(style: .medium)
+        impactFeedback.impactOccurred()
+        
+        // Create SMS URL
+        let smsURL = URL(string: "sms:\(phoneNumber)")
+        
+        if let smsURL = smsURL, UIApplication.shared.canOpenURL(smsURL) {
+            UIApplication.shared.open(smsURL)
+        } else {
+            // Handle case where messaging is not available
+            print("❌ Cannot send message to \(phoneNumber)")
+        }
+    }
+    
+    private func openPassengerLocationInAppleMaps() {
+        // Add haptic feedback
+        let impactFeedback = UIImpactFeedbackGenerator(style: .medium)
+        impactFeedback.impactOccurred()
+        
+        // Get passenger address
+        let address = passenger.address
+        
+        if address.isEmpty {
+            print("❌ No address available for passenger")
+            return
+        }
+        
+        // Create Apple Maps URL
+        let encodedAddress = address.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+        let mapsURL = "https://maps.apple.com/?q=\(encodedAddress)"
+        
+        if let url = URL(string: mapsURL) {
+            if UIApplication.shared.canOpenURL(url) {
+                UIApplication.shared.open(url)
+                print("🗺️ Opened Apple Maps with passenger location: \(address)")
+            } else {
+                print("❌ Cannot open Apple Maps")
+            }
+        } else {
+            print("❌ Invalid Apple Maps URL")
+        }
+    }
+    
+    private func openPassengerLocationInGoogleMaps() {
+        // Add haptic feedback
+        let impactFeedback = UIImpactFeedbackGenerator(style: .medium)
+        impactFeedback.impactOccurred()
+        
+        // Get passenger address
+        let address = passenger.address
+        
+        if address.isEmpty {
+            print("❌ No address available for passenger")
+            return
+        }
+        
+        // Create Google Maps URL
+        let encodedAddress = address.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+        let mapsURL = "https://www.google.com/maps/search/?api=1&query=\(encodedAddress)"
+        
+        if let url = URL(string: mapsURL) {
+            if UIApplication.shared.canOpenURL(url) {
+                UIApplication.shared.open(url)
+                print("🗺️ Opened Google Maps with passenger location: \(address)")
+            } else {
+                print("❌ Cannot open Google Maps")
+            }
+        } else {
+            print("❌ Invalid Google Maps URL")
+        }
+    }
+    
     var body: some View {
         ScrollView {
             VStack(spacing: 0) {
@@ -144,12 +257,26 @@ struct PassengerDetailView: View {
                                 color: .blue,
                                 action: { selectedAction = .message }
                             )
-                            ActionButton(
-                                icon: "map.fill",
-                                label: "Map",
-                                color: .orange,
-                                action: { showMap = true }
-                            )
+                            Menu {
+                                Button(action: {
+                                    openPassengerLocationInAppleMaps()
+                                }) {
+                                    Label("Apple Maps", systemImage: "map")
+                                }
+                                
+                                Button(action: {
+                                    openPassengerLocationInGoogleMaps()
+                                }) {
+                                    Label("Google Maps", systemImage: "map")
+                                }
+                            } label: {
+                                ActionButton(
+                                    icon: "map.fill",
+                                    label: "Map",
+                                    color: .orange,
+                                    action: { }
+                                )
+                            }
                         }
                         .padding(.bottom, 16)
                     }
@@ -293,17 +420,13 @@ struct PassengerDetailView: View {
                 }
             }
         }
-        .sheet(isPresented: $showMap) {
-            // Map view would go here
-            Text("Map View")
-                .padding()
-        }
         .actionSheet(item: $selectedAction) { action in
             ActionSheet(
                 title: Text("Contact \(passenger.name.split(separator: " ").first ?? "Passenger")"),
+                message: Text("Phone: \(passenger.contactInfo ?? "Not available")"),
                 buttons: [
                     .default(Text(action.rawValue)) {
-                        // Handle contact action
+                        handleContactAction(action)
                     },
                     .cancel()
                 ]
@@ -322,6 +445,13 @@ struct PassengerDetailView: View {
             }
         } message: {
             Text(routeViewModel.errorMessage)
+        }
+        .alert("Contact Information Unavailable", isPresented: $showContactError) {
+            Button("OK") {
+                showContactError = false
+            }
+        } message: {
+            Text("No phone number is available for this passenger. Please contact your supervisor for assistance.")
         }
     }
 }
@@ -431,4 +561,31 @@ struct PassengerDetailView_Previews: PreviewProvider {
             .environmentObject(RouteViewModel())
         }
     }
+}
+
+#Preview("Light Mode") {
+    PassengerDetailView(passenger: Passenger(
+        recid: "1",
+        name: "Emily Rodriguez",
+        address: "789 Maple Drive, Springfield, IL 62701",
+        status: .pending,
+        contactInfo: "(555) 345-6789",
+        gender: 2,
+        city: "Springfield"
+    ))
+    .environmentObject(RouteViewModel())
+}
+
+#Preview("Dark Mode") {
+    PassengerDetailView(passenger: Passenger(
+        recid: "2",
+        name: "Sarah Johnson",
+        address: "123 Oak Street, Springfield, IL 62701",
+        status: .pickedUp,
+        contactInfo: "(555) 123-4567",
+        gender: 2,
+        city: "Springfield"
+    ))
+    .environmentObject(RouteViewModel())
+    .preferredColorScheme(.dark)
 }

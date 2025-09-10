@@ -100,7 +100,13 @@ struct PassengerCardView: View {
             .onTapGesture(perform: onTap)
             
             // Action button
-            Button(action: action) {
+            Button(action: {
+                // Add haptic feedback
+                let impactFeedback = UIImpactFeedbackGenerator(style: .medium)
+                impactFeedback.impactOccurred()
+                
+                action()
+            }) {
                 HStack {
                     Spacer()
                     if routeViewModel.isLoading {
@@ -156,4 +162,44 @@ struct PassengerCardView: View {
             .previewLayout(.sizeThatFits)
         }
     }
+}
+
+// MARK: - Preview
+#Preview("Light Mode") {
+    PassengerCardView(
+        passenger: Passenger(
+            recid: "1",
+            name: "Emily Rodriguez",
+            address: "789 Maple Drive, Springfield, IL 62701",
+            status: .pending,
+            contactInfo: "(555) 345-6789",
+            gender: 2,
+            city: "Springfield"
+        ),
+        buttonTitle: "Pick Up",
+        buttonColor: .blue,
+        action: { print("Pickup action tapped") },
+        onTap: { print("Card tapped - Emily Rodriguez") }
+    )
+    .environmentObject(RouteViewModel())
+}
+
+#Preview("Dark Mode") {
+    PassengerCardView(
+        passenger: Passenger(
+            recid: "2",
+            name: "Sarah Johnson",
+            address: "123 Oak Street, Springfield, IL 62701",
+            status: .pickedUp,
+            contactInfo: "(555) 123-4567",
+            gender: 2,
+            city: "Springfield"
+        ),
+        buttonTitle: "Drop Off",
+        buttonColor: .green,
+        action: { print("Drop-off action tapped") },
+        onTap: { print("Card tapped - Sarah Johnson") }
+    )
+    .environmentObject(RouteViewModel())
+    .preferredColorScheme(.dark)
 }

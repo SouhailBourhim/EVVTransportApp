@@ -51,6 +51,11 @@ class AuthViewModel: ObservableObject {
     }
     
     func logout() {
+        print("🔍 LOGOUT CALLED - Stack trace:")
+        print("   - Current user: \(currentUser?.username ?? "nil")")
+        print("   - Current route: \(currentRouteId ?? "nil")")
+        print("   - Is authenticated: \(isAuthenticated)")
+        
         // Clear backend authentication
         networkService.clearAuthToken()
         dataService.clearAllData()
@@ -69,6 +74,11 @@ class AuthViewModel: ObservableObject {
     
     /// Clears session data without showing error messages (for silent cleanup)
     private func clearSessionSilently() {
+        print("🔍 CLEAR SESSION SILENTLY CALLED - Stack trace:")
+        print("   - Current user: \(currentUser?.username ?? "nil")")
+        print("   - Current route: \(currentRouteId ?? "nil")")
+        print("   - Is authenticated: \(isAuthenticated)")
+        
         // Clear backend authentication
         networkService.clearAuthToken()
         dataService.clearAllData()

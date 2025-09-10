@@ -45,7 +45,7 @@ class RouteViewModel: ObservableObject {
         
         // Check network connectivity
         guard networkService.checkNetworkConnectivity() else {
-            showError("No internet connection available", showRetry: true)
+            showError("No internet connection available. Please check your network settings and try again.", showRetry: true)
             return
         }
         
@@ -185,6 +185,12 @@ class RouteViewModel: ObservableObject {
     func forceRefresh() async {
         guard let routeId = getCurrentRouteId() else {
             errorMessage = "No route assigned. Please log in again."
+            return
+        }
+        
+        // Check network connectivity first
+        guard networkService.checkNetworkConnectivity() else {
+            errorMessage = "No internet connection available. Please check your network settings and try again."
             return
         }
         

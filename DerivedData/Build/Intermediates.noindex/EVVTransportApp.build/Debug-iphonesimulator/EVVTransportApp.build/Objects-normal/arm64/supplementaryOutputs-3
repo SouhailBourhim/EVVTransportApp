@@ -1,0 +1,18 @@
+"/Users/apple/Desktop/EVVTransportApp/EVVTransportApp/App/EVVTransportAppApp.swift":
+  object: "/Users/apple/Desktop/EVVTransportApp/DerivedData/Build/Intermediates.noindex/EVVTransportApp.build/Debug-iphonesimulator/EVVTransportApp.build/Objects-normal/arm64/EVVTransportAppApp.o"
+  swift-dependencies: "/Users/apple/Desktop/EVVTransportApp/DerivedData/Build/Intermediates.noindex/EVVTransportApp.build/Debug-iphonesimulator/EVVTransportApp.build/Objects-normal/arm64/EVVTransportAppApp.swiftdeps"
+  const-values: "/Users/apple/Desktop/EVVTransportApp/DerivedData/Build/Intermediates.noindex/EVVTransportApp.build/Debug-iphonesimulator/EVVTransportApp.build/Objects-normal/arm64/EVVTransportAppApp.swiftconstvalues"
+  diagnostics: "/Users/apple/Desktop/EVVTransportApp/DerivedData/Build/Intermediates.noindex/EVVTransportApp.build/Debug-iphonesimulator/EVVTransportApp.build/Objects-normal/arm64/EVVTransportAppApp.dia"
+  dependencies: "/Users/apple/Desktop/EVVTransportApp/DerivedData/Build/Intermediates.noindex/EVVTransportApp.build/Debug-iphonesimulator/EVVTransportApp.build/Objects-normal/arm64/EVVTransportAppApp.d"
+"/Users/apple/Desktop/EVVTransportApp/EVVTransportApp/Views/Dashboard/PendingPickupSectionView.swift":
+  object: "/Users/apple/Desktop/EVVTransportApp/DerivedData/Build/Intermediates.noindex/EVVTransportApp.build/Debug-iphonesimulator/EVVTransportApp.build/Objects-normal/arm64/PendingPickupSectionView.o"
+  dependencies: "/Users/apple/Desktop/EVVTransportApp/DerivedData/Build/Intermediates.noindex/EVVTransportApp.build/Debug-iphonesimulator/EVVTransportApp.build/Objects-normal/arm64/PendingPickupSectionView.d"
+  const-values: "/Users/apple/Desktop/EVVTransportApp/DerivedData/Build/Intermediates.noindex/EVVTransportApp.build/Debug-iphonesimulator/EVVTransportApp.build/Objects-normal/arm64/PendingPickupSectionView.swiftconstvalues"
+  swift-dependencies: "/Users/apple/Desktop/EVVTransportApp/DerivedData/Build/Intermediates.noindex/EVVTransportApp.build/Debug-iphonesimulator/EVVTransportApp.build/Objects-normal/arm64/PendingPickupSectionView.swiftdeps"
+  diagnostics: "/Users/apple/Desktop/EVVTransportApp/DerivedData/Build/Intermediates.noindex/EVVTransportApp.build/Debug-iphonesimulator/EVVTransportApp.build/Objects-normal/arm64/PendingPickupSectionView.dia"
+"/Users/apple/Desktop/EVVTransportApp/EVVTransportApp/App/ContentView.swift":
+  const-values: "/Users/apple/Desktop/EVVTransportApp/DerivedData/Build/Intermediates.noindex/EVVTransportApp.build/Debug-iphonesimulator/EVVTransportApp.build/Objects-normal/arm64/ContentView.swiftconstvalues"
+  dependencies: "/Users/apple/Desktop/EVVTransportApp/DerivedData/Build/Intermediates.noindex/EVVTransportApp.build/Debug-iphonesimulator/EVVTransportApp.build/Objects-normal/arm64/ContentView.d"
+  object: "/Users/apple/Desktop/EVVTransportApp/DerivedData/Build/Intermediates.noindex/EVVTransportApp.build/Debug-iphonesimulator/EVVTransportApp.build/Objects-normal/arm64/ContentView.o"
+  swift-dependencies: "/Users/apple/Desktop/EVVTransportApp/DerivedData/Build/Intermediates.noindex/EVVTransportApp.build/Debug-iphonesimulator/EVVTransportApp.build/Objects-normal/arm64/ContentView.swiftdeps"
+  diagnostics: "/Users/apple/Desktop/EVVTransportApp/DerivedData/Build/Intermediates.noindex/EVVTransportApp.build/Debug-iphonesimulator/EVVTransportApp.build/Objects-normal/arm64/ContentView.dia"

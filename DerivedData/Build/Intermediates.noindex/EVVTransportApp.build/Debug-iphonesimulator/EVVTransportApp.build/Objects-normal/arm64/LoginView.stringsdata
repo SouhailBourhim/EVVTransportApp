@@ -1,0 +1,80 @@
+{
+  "source": "/Users/apple/Desktop/EVVTransportApp/EVVTransportApp/Views/Authentication/LoginView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "EVV Transport",
+        "location": {
+          "startingColumn": 38,
+          "startingLine": 69
+        }
+      },
+      {
+        "comment": "",
+        "key": "Driver Portal",
+        "location": {
+          "startingColumn": 38,
+          "startingLine": 73
+        }
+      },
+      {
+        "comment": "",
+        "key": "Username",
+        "location": {
+          "startingColumn": 38,
+          "startingLine": 87
+        }
+      },
+      {
+        "comment": "",
+        "key": "Enter your username",
+        "location": {
+          "startingColumn": 47,
+          "startingLine": 96
+        }
+      },
+      {
+        "comment": "",
+        "key": "Password",
+        "location": {
+          "startingColumn": 38,
+          "startingLine": 120
+        }
+      },
+      {
+        "comment": "",
+        "key": "Enter your password",
+        "location": {
+          "startingColumn": 51,
+          "startingLine": 130
+        }
+      },
+      {
+        "comment": "",
+        "key": "Enter your password",
+        "location": {
+          "startingColumn": 53,
+          "startingLine": 133
+        }
+      },
+      {
+        "comment": "",
+        "key": "Signing In...",
+        "location": {
+          "startingColumn": 64,
+          "startingLine": 202
+        }
+      },
+      {
+        "comment": "",
+        "key": "Sign In",
+        "location": {
+          "startingColumn": 82,
+          "startingLine": 202
+        }
+      }
+    ]
+  },
+  "version": 1
+}

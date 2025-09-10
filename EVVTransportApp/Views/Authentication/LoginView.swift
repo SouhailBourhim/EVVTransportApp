@@ -182,11 +182,17 @@ struct LoginView: View {
                         }
                         
                         // Enhanced Login Button
-                        Button(action: login) {
+                        Button(action: {
+                            // Add haptic feedback
+                            let impactFeedback = UIImpactFeedbackGenerator(style: .medium)
+                            impactFeedback.impactOccurred()
+                            
+                            login()
+                        }) {
                             HStack(spacing: 12) {
                                 if authViewModel.isLoading {
                                     ProgressView()
-                                        .progressViewStyle(CircularProgressViewStyle(tint: .white))
+                                        .progressViewStyle(CircularProgressViewStyle(tint: Constants.UI.Colors.buttonText))
                                         .scaleEffect(0.9)
                                 } else {
                                     Image(systemName: "arrow.right.circle.fill")
@@ -201,16 +207,16 @@ struct LoginView: View {
                             .background(
                                 LinearGradient(
                                     gradient: Gradient(colors: [
-                                        Color.blue,
-                                        Color.blue.opacity(0.8)
+                                        Constants.UI.Colors.primaryBlue,
+                                        Constants.UI.Colors.primaryBlue.opacity(0.8)
                                     ]),
                                     startPoint: .leading,
                                     endPoint: .trailing
                                 )
                             )
-                            .foregroundColor(.white)
+                            .foregroundColor(Constants.UI.Colors.buttonText)
                             .cornerRadius(14)
-                            .shadow(color: .blue.opacity(0.4), radius: 12, x: 0, y: 6)
+                            .shadow(color: Constants.UI.Colors.primaryBlue.opacity(0.4), radius: 12, x: 0, y: 6)
                             .scaleEffect(authViewModel.isLoading ? 0.98 : 1.0)
                             .opacity(authViewModel.isLoading ? 0.8 : 1.0)
                         }
@@ -222,7 +228,7 @@ struct LoginView: View {
                     .background(
                         RoundedRectangle(cornerRadius: 20)
                             .fill(Color(.systemBackground))
-                            .shadow(color: Color.black.opacity(0.1), radius: 20, x: 0, y: 10)
+                            .shadow(color: Constants.UI.Colors.primaryText.opacity(0.1), radius: 20, x: 0, y: 10)
                     )
                     .padding(.horizontal, 20)
                     .id(scrollSpace)
@@ -289,7 +295,13 @@ struct LoginView: View {
     }
 }
 
-#Preview {
+#Preview("Light Mode") {
     LoginView()
         .environmentObject(AuthViewModel())
+}
+
+#Preview("Dark Mode") {
+    LoginView()
+        .environmentObject(AuthViewModel())
+        .preferredColorScheme(.dark)
 }

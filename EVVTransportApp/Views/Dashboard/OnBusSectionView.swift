@@ -36,14 +36,14 @@ struct OnBusSectionView: View {
                 HStack(spacing: 4) {
                     Image(systemName: "person.2.fill")
                         .font(.subheadline)
-                        .foregroundColor(.blue)
+                        .foregroundColor(Constants.UI.Colors.primaryBlue)
                     Text("\(routeViewModel.onBusPassengers.count)")
                         .font(.subheadline)
                         .fontWeight(.semibold)
-                        .foregroundColor(.white)
+                        .foregroundColor(Constants.UI.Colors.buttonText)
                         .padding(.horizontal, 10)
                         .padding(.vertical, 4)
-                        .background(Capsule().fill(Color.blue))
+                        .background(Capsule().fill(Constants.UI.Colors.primaryBlue))
                 }
             }
             .padding(.horizontal)
@@ -104,7 +104,13 @@ struct OnBusSectionView: View {
     }
 }
 
-#Preview {
+#Preview("Light Mode") {
     OnBusSectionView()
         .environmentObject(RouteViewModel())
+}
+
+#Preview("Dark Mode") {
+    OnBusSectionView()
+        .environmentObject(RouteViewModel())
+        .preferredColorScheme(.dark)
 }
