@@ -27,23 +27,28 @@ struct OnBusSectionView: View {
             
             // Header with count badge
             HStack {
-                Text("On the Bus")
-                    .font(.title3)
-                    .fontWeight(.bold)
+                HStack(spacing: 8) {
+                    Image(systemName: "bus.fill")
+                        .font(.title)
+                        .foregroundColor(Constants.UI.Colors.onBusBlue)
+                    Text("On the Bus")
+                        .font(Constants.UI.Typography.title)
+                        .foregroundColor(Constants.UI.Colors.onBusBlue)
+                }
                 
                 Spacer()
                 
                 HStack(spacing: 4) {
                     Image(systemName: "person.2.fill")
                         .font(.subheadline)
-                        .foregroundColor(Constants.UI.Colors.primaryBlue)
+                        .foregroundColor(.white)
                     Text("\(routeViewModel.onBusPassengers.count)")
                         .font(.subheadline)
-                        .fontWeight(.semibold)
-                        .foregroundColor(Constants.UI.Colors.buttonText)
-                        .padding(.horizontal, 10)
-                        .padding(.vertical, 4)
-                        .background(Capsule().fill(Constants.UI.Colors.primaryBlue))
+                        .fontWeight(.bold)
+                        .foregroundColor(.white)
+                        .padding(.horizontal, 12)
+                        .padding(.vertical, 6)
+                        .background(Capsule().fill(Constants.UI.Colors.onBusBlue))
                 }
             }
             .padding(.horizontal)
@@ -74,12 +79,12 @@ struct OnBusSectionView: View {
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
             } else {
                 ScrollView {
-                    LazyVStack(spacing: 12) {
+                    LazyVStack(spacing: 16) {
                         ForEach(filteredPassengers) { passenger in
                             PassengerCardView(
                                 passenger: passenger,
                                 buttonTitle: "Mark as Dropped Off",
-                                buttonColor: .green,
+                                buttonColor: Constants.UI.Colors.onBusBlue,
                                 action: {
                                     Task {
                                         await routeViewModel.updatePassengerStatus(passenger, to: .droppedOff)
@@ -91,8 +96,8 @@ struct OnBusSectionView: View {
                             )
                         }
                     }
-                    .padding(.horizontal)
-                    .padding(.bottom, 24) // Extra padding for button visibility
+                    .padding(.horizontal, 16)
+                    .padding(.bottom, 32) // Extra padding for button visibility
                 }
             }
             Divider().frame(height: 4).background(Constants.UI.Colors.separator)

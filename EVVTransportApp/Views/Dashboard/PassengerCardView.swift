@@ -44,7 +44,7 @@ struct PassengerCardView: View {
                 VStack(alignment: .leading, spacing: 4) {
                     HStack(alignment: .firstTextBaseline) {
                         Text(passenger.name)
-                            .font(.headline)
+                            .font(Constants.UI.Typography.headline)
                             .lineLimit(1)
                         
                         Spacer()
@@ -52,16 +52,16 @@ struct PassengerCardView: View {
                         // Status indicator
                         HStack(spacing: 4) {
                             Circle()
-                                .fill(isPickedUp ? Color.green : Color.orange)
-                                .frame(width: 6, height: 6)
+                                .fill(isPickedUp ? Constants.UI.Colors.onBusBlue : Constants.UI.Colors.pendingRed)
+                                .frame(width: 8, height: 8)
                             Text(isPickedUp ? "On Board" : "Pending")
-                                .font(.caption2)
-                                .fontWeight(.medium)
+                                .font(Constants.UI.Typography.caption)
+                                .fontWeight(.semibold)
                         }
-                        .padding(.horizontal, 8)
-                        .padding(.vertical, 4)
-                        .background(isPickedUp ? Color.green.opacity(0.1) : Color.orange.opacity(0.1))
-                        .foregroundColor(isPickedUp ? .green : .orange)
+                        .padding(.horizontal, 10)
+                        .padding(.vertical, 6)
+                        .background(isPickedUp ? Constants.UI.Colors.onBusBlue.opacity(0.15) : Constants.UI.Colors.pendingRed.opacity(0.15))
+                        .foregroundColor(isPickedUp ? Constants.UI.Colors.onBusBlue : Constants.UI.Colors.pendingRed)
                         .clipShape(Capsule())
                     }
                     
@@ -73,7 +73,7 @@ struct PassengerCardView: View {
                             .frame(width: 16)
                         
                         Text(location)
-                            .font(.subheadline)
+                            .font(Constants.UI.Typography.body)
                             .foregroundColor(.primary)
                             .lineLimit(2)
                             .multilineTextAlignment(.leading)
@@ -115,14 +115,14 @@ struct PassengerCardView: View {
                             .foregroundColor(.white)
                     } else {
                         Text(buttonTitle.uppercased())
-                            .font(.system(size: 14, weight: .semibold))
+                            .font(Constants.UI.Typography.button)
                             .kerning(0.5)
                             .foregroundColor(.white)
                     }
                     Spacer()
                 }
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, 16)
+                .frame(maxWidth: .infinity, minHeight: 44)
+                .padding(.vertical, 14)
                 .background(buttonColor)
                 .cornerRadius(12)
             }
@@ -131,6 +131,8 @@ struct PassengerCardView: View {
             .background(Color(.systemBackground))
             .cornerRadius(16)
             .shadow(color: .black.opacity(0.1), radius: 4, x: 0, y: 2)
+            .scaleEffect(routeViewModel.isLoading ? 0.98 : 1.0)
+            .animation(Constants.UI.statusChangeAnimation, value: routeViewModel.isLoading)
             .onTapGesture {
                 onTap()
             }

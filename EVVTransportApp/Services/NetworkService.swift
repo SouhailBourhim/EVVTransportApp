@@ -142,7 +142,7 @@ class NetworkService: ObservableObject {
     private let baseURL = Constants.API.baseURL
     private let session: URLSession
     private var authToken: String?
-    private var currentTenantId: Int = 1
+    var currentTenantId: Int = 1
     
     // Network monitoring
     @Published var isNetworkAvailable = true
@@ -292,6 +292,7 @@ class NetworkService: ObservableObject {
             return user
         }
     }
+    
     
     // MARK: - Data Retrieval
     

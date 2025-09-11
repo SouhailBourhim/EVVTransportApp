@@ -92,6 +92,15 @@ extension View {
         self
             .frame(minHeight: Constants.UI.largeTouchTarget)
     }
+    
+    @ViewBuilder
+    func `if`<Content: View>(_ condition: Bool, transform: (Self) -> Content) -> some View {
+        if condition {
+            transform(self)
+        } else {
+            self
+        }
+    }
 }
 
 // MARK: - Color Extensions

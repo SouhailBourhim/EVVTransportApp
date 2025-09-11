@@ -258,6 +258,38 @@ struct LoginView: View {
         .onDisappear {
             removeKeyboardObservers()
         }
+        .overlay(
+            // Success Message Toast
+            Group {
+                if authViewModel.showSuccessMessage {
+                    VStack {
+                        Spacer()
+                        HStack {
+                            Image(systemName: "checkmark.circle.fill")
+                                .foregroundColor(.green)
+                                .font(.title2)
+                            
+                            Text(authViewModel.successMessage)
+                                .font(.body)
+                                .fontWeight(.medium)
+                                .foregroundColor(.primary)
+                            
+                            Spacer()
+                        }
+                        .padding()
+                        .background(
+                            RoundedRectangle(cornerRadius: 12)
+                                .fill(Constants.UI.Colors.cardBackground)
+                                .shadow(color: .black.opacity(0.1), radius: 8, x: 0, y: 4)
+                        )
+                        .padding(.horizontal, 20)
+                        .padding(.bottom, 50)
+                        .transition(.move(edge: .bottom).combined(with: .opacity))
+                        .animation(.easeInOut(duration: 0.3), value: authViewModel.showSuccessMessage)
+                    }
+                }
+            }
+        )
     }
     
     private func login() {

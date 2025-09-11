@@ -291,9 +291,8 @@ struct DashboardView: View {
                     // Header
                     HStack {
                         VStack(alignment: .leading) {
-                            Text("Route Dashboard")
-                                .font(.largeTitle)
-                                .fontWeight(.bold)
+                            Text("Route Overview")
+                                .font(Constants.UI.Typography.largeTitle)
                             if !lastSyncTime.isEmpty {
                                 Text(lastSyncTime)
                                     .font(.caption)

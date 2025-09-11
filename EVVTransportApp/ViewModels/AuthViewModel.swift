@@ -142,22 +142,21 @@ class AuthViewModel: ObservableObject {
     // MARK: - Private Helper Methods
     
     private func handleLoginSuccess(_ user: User) {
-        // Update local state
+        // Update local state with basic user info
         currentUser = user
-        currentRouteId = user.routeId
         isAuthenticated = true
         
         // Clear any previous error messages
         errorMessage = ""
         showErrorAlert = false
         
-        // Show success message
-        showSuccess("Welcome back, \(user.driverName ?? user.username)!")
+        // Set the route ID from the user object
+        currentRouteId = user.routeId
         
         print("✅ Login successful for user: \(user.username)")
-        print("   Route ID: \(user.routeId)")
         print("   Session ID: \(user.sessionId ?? "N/A")")
     }
+    
     
     // MARK: - Session Validation
     

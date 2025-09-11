@@ -50,6 +50,18 @@ struct Constants {
         static let buttonCornerRadius: CGFloat = 12.0
         static let defaultPadding: CGFloat = 16.0
         
+        // Enhanced typography for transit use
+        struct Typography {
+            static let largeTitle: Font = .system(size: 28, weight: .bold, design: .default)
+            static let title: Font = .system(size: 22, weight: .bold, design: .default)
+            static let headline: Font = .system(size: 20, weight: .semibold, design: .default)
+            static let subheadline: Font = .system(size: 18, weight: .medium, design: .default)
+            static let body: Font = .system(size: 16, weight: .regular, design: .default)
+            static let callout: Font = .system(size: 15, weight: .medium, design: .default)
+            static let caption: Font = .system(size: 13, weight: .regular, design: .default)
+            static let button: Font = .system(size: 17, weight: .bold, design: .default)
+        }
+        
         // Colors - Dark Mode Compatible
         struct Colors {
             // Primary colors that work in both light and dark mode
@@ -58,6 +70,34 @@ struct Constants {
             static let warningOrange = Color.orange
             static let errorRed = Color.red
             static let secondaryGray = Color.gray
+            
+            // Enhanced color scheme for better visual hierarchy
+            static let pickupGreen = Color(UIColor { traitCollection in
+                switch traitCollection.userInterfaceStyle {
+                case .dark:
+                    return UIColor(red: 0.2, green: 0.7, blue: 0.2, alpha: 1.0) // Brighter green for dark mode
+                default:
+                    return UIColor(red: 0.0, green: 0.6, blue: 0.0, alpha: 1.0) // Vibrant green for light mode
+                }
+            })
+            
+            static let onBusBlue = Color(UIColor { traitCollection in
+                switch traitCollection.userInterfaceStyle {
+                case .dark:
+                    return UIColor(red: 0.2, green: 0.5, blue: 0.9, alpha: 1.0) // Brighter blue for dark mode
+                default:
+                    return UIColor(red: 0.0, green: 0.4, blue: 0.8, alpha: 1.0) // Vibrant blue for light mode
+                }
+            })
+            
+            static let pendingRed = Color(UIColor { traitCollection in
+                switch traitCollection.userInterfaceStyle {
+                case .dark:
+                    return UIColor(red: 0.9, green: 0.3, blue: 0.3, alpha: 1.0) // Brighter red for dark mode
+                default:
+                    return UIColor(red: 0.8, green: 0.2, blue: 0.2, alpha: 1.0) // Vibrant red for light mode
+                }
+            })
             
             // Modern color scheme - adaptive with better visual appeal
             static let background = Color(UIColor.systemBackground)
@@ -178,9 +218,12 @@ struct Constants {
             static let destructiveButtonText = Color.white
         }
         
-        // Animations
+        // Enhanced animations for better UX
         static let defaultAnimation = Animation.easeInOut(duration: 0.3)
         static let quickAnimation = Animation.easeInOut(duration: 0.2)
+        static let statusChangeAnimation = Animation.spring(response: 0.6, dampingFraction: 0.8, blendDuration: 0.2)
+        static let buttonPressAnimation = Animation.easeInOut(duration: 0.15)
+        static let cardAppearAnimation = Animation.spring(response: 0.5, dampingFraction: 0.7, blendDuration: 0.1)
     }
     
     // MARK: - Location Configuration

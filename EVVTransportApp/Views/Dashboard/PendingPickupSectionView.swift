@@ -255,23 +255,28 @@ struct PendingPickupSectionView: View {
             
             // Header with count badge
             HStack {
-                Text("Pending Pickups")
-                    .font(.title3)
-                    .fontWeight(.bold)
+                HStack(spacing: 8) {
+                    Image(systemName: "clock.fill")
+                        .font(.title)
+                        .foregroundColor(Constants.UI.Colors.pendingRed)
+                    Text("Pending Pickups")
+                        .font(Constants.UI.Typography.title)
+                        .foregroundColor(Constants.UI.Colors.pendingRed)
+                }
                 
                 Spacer()
                 
                 HStack(spacing: 4) {
-                    Image(systemName: "clock")
+                    Image(systemName: "person.circle")
                         .font(.subheadline)
-                        .foregroundColor(.orange)
+                        .foregroundColor(.white)
                     Text("\(routeViewModel.pendingPassengers.count)")
                         .font(.subheadline)
-                        .fontWeight(.semibold)
-                        .foregroundColor(Constants.UI.Colors.buttonText)
-                        .padding(.horizontal, 10)
-                        .padding(.vertical, 4)
-                        .background(Capsule().fill(Color.orange))
+                        .fontWeight(.bold)
+                        .foregroundColor(.white)
+                        .padding(.horizontal, 12)
+                        .padding(.vertical, 6)
+                        .background(Capsule().fill(Constants.UI.Colors.pendingRed))
                 }
             }
             .padding(.horizontal)
@@ -312,7 +317,7 @@ struct PendingPickupSectionView: View {
                             PassengerCardView(
                                 passenger: passenger,
                                 buttonTitle: "Mark as Picked Up",
-                                buttonColor: Constants.UI.Colors.primaryBlue,
+                                buttonColor: Constants.UI.Colors.pickupGreen,
                                 action: {
                                     Task {
                                         await routeViewModel.updatePassengerStatus(passenger, to: .pickedUp)
@@ -324,8 +329,8 @@ struct PendingPickupSectionView: View {
                             )
                         }
                     }
-                    .padding(.horizontal)
-                    .padding(.bottom, 24) // Extra padding for button visibility
+                    .padding(.horizontal, 16)
+                    .padding(.bottom, 32) // Extra padding for button visibility
                 }
             }
         }
