@@ -41,7 +41,7 @@ EVVTransportApp is a comprehensive iOS application designed for transportation m
 
 1. **Clone the Repository**
    ```bash
-   git clone [repository-url]
+   git clone (https://github.com/SouhailBourhim/EVVTransportApp)
    cd EVVTransportApp
    ```
 
